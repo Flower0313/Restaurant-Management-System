@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@*@ViewBag.Title*@</title>
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.pagination.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="~/Content/dist/js/sb-admin-2.js"></script>
+
+</head>
+    <body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0;">
+            <div class="navbar-header col-lg-3">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Index/Index">管理首页</a>
+            </div>
+            <!-- /.navbar-header -->
+            <div class="navbar-brand col-lg-6" style="text-align: center">
+                <label id="showtime">@DateTime.Now.ToString("g")</label>
+                <label>@ViewBag.muban</label>
+            </div>
+            <!--用户显示-->
+            <div class="navbar-brand pull-right" style="color: red">
+                <label class="fa fa-comments">:</label><label style="color: #337AB7;cursor:pointer"><a href="/Chat/Index?namez=@Session["admin"].ToString()" style="font-size: 11px; ">聊天</a></label>&nbsp;&nbsp;
+                <label class="fa fa-user fa-fw">:</label><label style="color: #337AB7"><span id="adminname">@Session["admin"]</span><a href="/Login/login" style="font-size: 11px; margin-left: 5px" id="zhuxiao">注销</a></label>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <!--搜索-->
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="搜索...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </li>
+                        @*<li>
+                            <a href="#"><i class="fa fa-dashboard fa-fw"></i>业务统计</a>
+                        </li>*@
+                        @if (Session["admin"].ToString() != "SuperAdmin") 
+                        {
+                        <li>
+                            <a href="/Another/AddConsume"><i class="fa fa-cutlery"></i>点餐</a>
+                        </li>
+                        }
+                        <li>
+                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i>消费详情<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Index/Record">用户消费记录</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i>员工管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Index/Staff">员工资料</a>
+                                </li>
+                                <li>
+                                    <a href="/Index/StaffAdd">新增员工</a>
+                                </li>
+                                @try
+                                {
+                                    if (Session["admin"].ToString() == "SuperAdmin")
+                                    {
+                                    <li>
+                                        <a href="/Index/ShoperAdd">新增店主</a>
+                                    </li>
+                                    }
+                                }
+                                catch
+                                {
+
+                                }
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-credit-card fa-fw"></i>会员管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Index/Employee">会员详情</a>
+                                </li>
+                                <li>
+                                    <a href="/Index/Lost">会员状态</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-cutlery fa-fw"></i>菜品管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="/Index/Food">菜品详情</a>
+                                </li>
+                                @try
+                                {
+                                    if (Session["admin"].ToString() == "SuperAdmin")
+                                    {
+                                    <li>
+                                        <a href="/Food/food">菜品新增</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Meal/Meal">套餐、类别增加</a>
+                                    </li>
+                                    }
+                                }
+                                catch
+                                { }
+
+                            </ul>
+                        </li>
+
+                        @try
+                        {
+                            if (Session["admin"].ToString() == "SuperAdmin")
+                            {
+                            <li>
+                                <a href="#"><i class="fa fa-home fa-fw"></i>门店管理<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+
+                                    <li>
+                                        <a href="/Index/ShopAdd?name='@Session["admin"]'">添加店铺</a>
+                                    </li>
+                                    <li>
+                                        <a href="/Index/ShopAuto">店铺登录设置</a>
+                                    </li>
+                                </ul>
+                            </li>
+                                
+                                    
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+                        <li>
+                            <a href="#"><i class="fa fa-cloud"></i>门面详情<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" id="CityName">
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <div id="page-wrapper">
+            @*中间内容*@
+            @RenderBody()
+        </div>
+    </div>
+    <div style="text-align: center; height: 50px; line-height: 50px;" class="row">
+        <label>@@最终解释权归制作者所有</label>
+    </div>
+    <script>
+        var ta = setInterval("Checkin()", 2000);
+
+        $(function () {
+            city();
+            setInterval(function () {
+                var showtime = new Date();
+                var h = showtime.getHours();
+                var m = showtime.getMinutes();
+                var s = showtime.getSeconds();
+                var time = h + ":" + m + ":" + s;
+                $("#showtime").text(time);
+            }, 1000);
+        })
+
+        function city() {
+            $.ajax({
+                type: 'get',
+                dataType: 'json',
+                url: "/Layout/Show",
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#CityName").append("<li><a href='Shop?name=" + item.Shop_city + "'>" + item.Shop_city + "</a></li>");
+                    });
+                }, error: function (error) {
+                    myChart.hideLoading();
+                }
+            });
+        }
+
+        function Checkin()
+        {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "/Layout/DDD",
+                success: function (data) {
+                }
+            })
+        }
+        window.onbeforeunload = function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "/Chat/Endpage",
+                success: function (data) {
+                }
+            })
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,243 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+
+    <script src="~/Content/js/alert.js"></script>
+    <script src="~/Content/js/zeroModal.min.js"></script>
+    <style type="text/css">
+        .chatttleft {
+            width: 100%;
+            background-color: #92e131;
+            display: block;
+            word-break: break-all;
+            word-wrap: break-word;
+            margin-top: 1%;
+            padding: 1%;
+            border-radius: 0.8em;
+        }
+
+        .chatttright {
+            background-color: #0ff;
+            margin-top: 1%;
+            padding: 1%;
+        }
+    </style>
+</head>
+<body>
+    <div style="border: 1px solid black; margin: 0px auto;" class="container">
+        <div class="col-lg-12" style="background-color: #0ff; text-align: center; height: 40px; line-height: 40px">聊天室</div>
+        <div class="col-lg-5" style="margin-top: 1%">
+            <span>查询聊天记录：</span>
+            <select id="changechat">
+                <option value="0">即时</option>
+                <option value="1">昨天</option>
+                <option value="8">前7天</option>
+                <option value="全部">全部</option>
+            </select>
+        </div>
+        <div class="col-lg-12">
+            <div class="col-lg-10" style="background-color: white; height: 450px; margin-top: 10px; padding: 20px; overflow-x: auto; overflow-y: auto;" id="chatt">
+               
+            </div>
+            <div class="col-lg-2" style="background-color: #e0f0c2; height: 450px; margin-top: 10px; text-align: center">
+                <div class="col-lg-12" style="height: 30px; line-height: 30px; background-color: black; color: white">在线人数</div>
+                <ul style="list-style: none" id="members">
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <textarea style="resize: none; width: 100%; height: 100px;" id="neirong"></textarea>
+            @if (Session["admin"].ToString() == "SuperAdmin")
+            {
+                <button type="button" class="btn btn-default pull-left" id="clearall">清空所有记录</button>
+            }
+            <button type="button" class="btn btn-default pull-right" id="sendto">发送</button>
+        </div>
+
+    </div>
+    <script>
+        var namez = "";
+        var interval = setInterval("getshuju()", 1500);//每隔一秒执行一次redoMethod()
+        var interval2 = setInterval("updateonline()", 1500);//每秒更新在线最后一次时间
+        var member = setInterval("Checkmember()", 2000);//查看在线人员
+        //假如有两个按钮：继续、暂停
+        //$("#btn-pause").click(function(){//点击暂停按钮
+        //    if(interval){
+        //        clearInterval(interval);
+        //        interval = "";
+        //    }
+        //});
+        
+        function updateonline()
+        {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "/Chat/Updatetime",
+                data: $.param({ 'timezzz': gettime() }),
+                success: function (data) {
+                }
+            })
+        }
+
+            $(function () {
+                namez = document.location.search.substr(7).toString();
+            })
+
+            //获取数据
+            function getshuju() {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: "/Chat/GetChat",
+                    data: $.param({ 'change': $("#changechat").val(),'timest':gettime() }),
+                    success: function (data) {
+                        $.each(data, function (i, item) {
+                            var count = 0;
+                            for (var i = 0; i < $(".timess").length; i++) {
+                                if (item.times.toString() == $(".timess").eq(i).text() && item.chat_name.toString() == $(".names").eq(i).text()) {
+                                    count++;
+                                    break;
+                                }
+                            }
+                            if (count == 0) {
+                                if (item.chat_name == namez) {
+                                    $("#chatt").append("<div class='col-lg-12' style='overflow:hidden'><div class='pull-right' style='width:45%'><span style='font-size:17px' class='names'>" + item.chat_name + "</span>&nbsp;&nbsp;<span class='timess'>" + item.times + "</span><br /><div class='chatttleft chatttright'>" + item.chat_txt + "</div></div></div>");
+                                } else {
+                                    $("#chatt").append("<div class='col-lg-12' style='overflow:hidden'><div class='pull-left' style='width:45%'><span style='font-size:17px' class='names'>" + item.chat_name + "</span>&nbsp;&nbsp;<span class='timess'>" + item.times + "</span><br /><div class='chatttleft'>" + item.chat_txt + "</div></div></div>");
+                                }
+                            }
+                        });
+                    }
+                })
+            }
+
+            //获取每秒的时间
+            function gettime() {
+                var myDate = new Date();
+                var year = myDate.getFullYear();
+                var month = myDate.getMonth() + 1;
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                var date = myDate.getDate();
+                var h = myDate.getHours();
+                if (h < 10) {
+                    h = "0" + h;
+                }
+                var m = myDate.getMinutes();
+                if (m < 10) {
+                    m = "0" + m
+                }
+                var s = myDate.getSeconds();
+                if (s < 10) {
+                    s = "0" + s
+                }
+                var now = year + '-' + month + "-" + date + " " + h + ':' + m + ":" + s;
+                return now;
+            }
+
+            //发送按钮
+            $("#sendto").click(function () {
+                if ($("#neirong").val() == "") {//聊天内容判断
+                    alert("请输入聊天内容");
+                } else {
+                    var gettime2 = gettime();
+                    $("#chatt").append("<div class='col-lg-12'><div class='pull-right' style='width:45%'><span style='font-size:17px' class='names'>" + namez + "</span>&nbsp;&nbsp;<span class='timess'>" + gettime2 + "</span><br /><div class='chatttleft chatttright'>" + $("#neirong").val() + "</div></div></div>");
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: "/Chat/AddChat",
+                        data: $.param({ 'text': $("#neirong").val(), 'time': gettime2 }),
+                        success: function (data) {
+                        }
+                    })
+                }
+                $("#neirong").val("");
+            })
+
+            //用回车键来发送
+            $("#sendto").keydown(function (event) {
+                if (event.keyCode == 13) {
+                    $("#sendto").click();
+                }
+            });
+
+            //选择聊天记录
+            $("#changechat").change(function () {
+                if ($("#changechat").val() != "0") {
+                    $("#neirong").attr("readonly", true);
+                    $("#sendto").attr("disabled", true);
+                } else {
+                    $("#neirong").attr("readonly", false);
+                    $("#sendto").attr("disabled", false);
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: "/Chat/GetChat",
+                        data: $.param({ 'change': $("#changechat").val() }),
+                        success: function (data) {
+                            $("#chatt").empty();
+                            $.each(data, function (i, item) {
+                                var count = 0;
+                                for (var i = 0; i < $(".timess").length; i++) {
+                                    if (item.times.toString() == $(".timess").eq(i).text() && item.chat_name.toString() == $(".names").eq(i).text()) {
+                                        count++;
+                                        break;
+                                    }
+                                }
+
+                                if (count == 0) {
+                                    if (item.chat_name == namez) {
+                                        $("#chatt").append("<div class='col-lg-12' style='overflow:hidden'><div class='pull-right' style='width:45%'><span style='font-size:17px' class='names'>" + item.chat_name + "</span>&nbsp;&nbsp;<span class='timess'>" + item.times + "</span><br /><div class='chatttleft chatttright'>" + item.chat_txt + "</div></div></div>");
+                                    } else {
+                                        $("#chatt").append("<div class='col-lg-12' style='overflow:hidden'><div class='pull-left' style='width:45%'><span style='font-size:17px' class='names'>" + item.chat_name + "</span>&nbsp;&nbsp;<span class='timess'>" + item.times + "</span><br /><div class='chatttleft'>" + item.chat_txt + "</div></div></div>");
+                                    }
+                                }
+                            });
+                        }
+                    })
+                }
+            
+            })
+
+            //清空所有记录
+            $("#clearall").click(function () {
+                zeroModal.confirm('确认删除吗？', function () {
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'json',
+                        url: "/Chat/DeleteAll",
+                        success: function (data) {
+                        }
+                    })
+                    $("#chatt").empty();
+                })
+            })
+
+            function Checkmember()
+            {
+                $("#members").empty();
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'json',
+                    url: "/Chat/member",
+                    success: function (data) {
+                        $.each(data, function (i, item) {
+                            $("#members").append("<li>" + item.who + "</li>");
+                        })
+                    }
+                })
+            }
+    </script>
+</body>
+</html>

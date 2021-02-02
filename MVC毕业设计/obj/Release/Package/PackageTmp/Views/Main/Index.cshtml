@@ -1,0 +1,150 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    <link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.pagination.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="~/Content/dist/js/sb-admin-2.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/zeroModal.min.js"></script>
+    <style type="text/css">
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+        }
+        .first {
+        text-align:center;
+        }
+
+        .first ul {
+            list-style: none;
+        }
+
+            .first ul li {
+                margin-top: 8px;
+                font-family: 黑体;
+                color: #cd57e6;
+                background-color:#f0e7e7;
+                /*opacity:0.8;*/
+                background:rgba(255,255,255,0.3);
+            }
+                .first ul li button {
+                border:1px solid white;
+                border-radius:250px;
+                background-color:transparent;
+                color:white;
+                cursor:pointer;
+                }
+    </style>
+</head>
+<body>
+    <div class="col-lg-12" style="text-align: center">
+        <button type="button" class="btn btn-info btn-circle" id="denglu"><i class="fa fa-user"></i></button>
+    </div>
+    <div class="col-lg-12" style="margin-top: 1%">
+        <!--轮播-->
+        <div class="trent-slider">
+            <div>
+                <div class="t-slide current-t-slide">
+                    <img src="/Content/images/FlowerLogo.jpg" alt="" />
+                </div>
+                <div class="t-slide">
+                    <img src="/Content/images/FlowerBg2.jpg" />
+                </div>
+            </div>
+            <!--图片结束-->
+            <div class="t-slider-controls">
+                <div class="arrow right-arrow">
+                    <div class="arrow-container">
+                        <div class="arrow-icon"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <div class="arrow left-arrow">
+                    <div class="arrow-container">
+                        <div class="arrow-icon"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <div class="t-load-bar">
+                    <div class="inner-load-bar"></div>
+                </div>
+                <div class="t-dots-container">
+                    <div class="t-slide-dots-wrap">
+                        <div class="t-slide-dots">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--轮播结束-->
+    </div>
+    <div style="text-align:center;height:25px;line-height:25px;margin:0px 15px;">
+        <label style="color:#cd57e6">Flower Health restaurant</label>
+    </div>
+    <div style="margin:0px 15px;">
+        <div class="col-lg-12 first" style="overflow: hidden; text-align: center;background-image:url(/Content/images/food1.jpg);background-size:contain;padding:1% 15px;" >
+            <i class="fa fa-pencil fa-2x" style="color: #f7ab00"></i>
+            <ul>
+                <li>根据自身需求</li>
+                <li>定制不同套餐搭配</li>
+                <li>专业营养师为您匹配饮食</li>
+                <li><button type="button" style="width:20%;height:18px;vertical-align:middle;font-size:10px">点击更多</button></li>
+            </ul>
+        </div>
+        <div class="col-lg-12 first" style="overflow: hidden;text-align: center;background-image:url(/Content/images/food2.jpg);background-size:contain;padding:1% 15px;" >
+            <i class="fa fa-star fa-2x" style="color: #f7ab00"></i>
+            <ul>
+                <li style="color:#dceca4">专业营养师团队</li>
+                <li style="color:#dceca4">更有大师级别的导师---<span style="color:white">肖华大师</span></li>
+                <li style="color:#dceca4">亲自为您挑选最适合您的饮食系统</li>
+                <li><button type="button"style="width:20%;height:18px;vertical-align:middle;font-size:10px">点击更多</button></li>
+            </ul>
+        </div>
+        <div class="col-lg-12 first" style="text-align: center;background-image:url(/Content/images/flower_BGM.jpg);background-size:contain;padding:1% 15px;" >
+            <i class="glyphicon glyphicon-home fa-2x" style="color: #f7ab00"></i>
+            <ul>
+                <li>更有线下实体店</li>
+                <li>网红配置</li>
+                <li>体验食物最真实的感受</li>
+                <li><button type="button" style="width:20%;height:18px;vertical-align:middle;font-size:10px">点击更多</button></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-12" style="margin-top:10%;text-align:center">
+        <label style="color:#cd57e6">加入我们,你收获的不仅仅是健康</label>
+    </div>
+
+    <script>
+        $("#denglu").click(function () {
+            window.location.href = "/Login/login";
+        })
+        $(function () {
+            zeroModal.alert({
+                content: '欢迎本官网',
+                contentDetail: '此网站为预试阶段，正式产品皆未上架，最上方为管理员登录',
+            });         })
+        $(".first").find("button").click(function () {
+            zeroModal.alert({
+                content: '暂未开放',
+            });
+        })
+    </script>
+</body>
+</html>

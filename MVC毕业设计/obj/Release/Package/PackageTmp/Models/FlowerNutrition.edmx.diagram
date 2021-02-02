@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8ec7b47881374fed99d26b3d80008ab6" Name="关系图1">
+        <EntityTypeShape EntityType="FlowerNutritionModel.Auto" Width="1.5" PointX="3" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Consume" Width="1.5" PointX="3" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Department" Width="1.5" PointX="3.75" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Food" Width="1.5" PointX="6" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.FoodType" Width="1.5" PointX="3.75" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Forget" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Meal" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.MealFood" Width="1.5" PointX="8.25" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Member" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Record" Width="1.5" PointX="8.25" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Shop" Width="1.5" PointX="0.75" PointY="13" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Shop_Staff" Width="1.5" PointX="2.875" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Staff" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.User" Width="1.5" PointX="3" PointY="34.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.Vip" Width="1.5" PointX="3.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.staffdetail" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FlowerNutritionModel.v_Staff" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Auto_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Consume_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Staff_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Staff_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Food_FoodType" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Food_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Meal_Food_Food" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Record_Food" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Forget_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Member_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Member_Staff" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Member_Vip" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Record_Consume" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Record_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_Staff_Shop1" ManuallyRouted="false" />
+        <AssociationConnector Association="FlowerNutritionModel.FK_User_Shop" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,312 @@
+﻿@{
+    ViewBag.Title = "Food";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/pagination.css" rel="stylesheet" />
+<link href="~/Content/css/bootstrap-select.css" rel="stylesheet" />
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/js/bootstrap-select.min.js"></script>
+<script src="~/Content/js/defaults-zh_CN.js"></script>
+
+<style type="text/css">
+        .mask {
+            position: absolute;
+            top: 0px;
+            filter: alpha(opacity=60);
+            background-color: #777;
+            z-index: 1002;
+            left: 0px;
+            opacity: 0.5;
+            -moz-opacity: 0.5;
+        }
+
+        .food dd {
+            /*border:1px solid red;*/
+            text-align: center;
+            margin-bottom: 3px;
+            background-color: #ccfce7;
+            color: #5f575d;
+            font-size: 1vw;
+            font-weight: 600;
+        }
+
+        #detail input {
+            border: 1px solid transparent;
+        }
+    </style>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" style="font-size: 1.5vw; font-family: 微软雅黑;">菜品查询</h1>
+                    </div>
+                </div>
+            </div>
+            <!--选择显示-->
+            <div class="row" style="position:relative;padding-bottom:30px;">
+                <div class="col-lg-12">
+                    <select class="selectpicker" id="FoodType" data-live-search="true" title="请选择食品类别" data-style="btn-success">
+                        <option value="FoodType_id">全部</option>
+                    </select>
+                </div>
+                <!--内容显示-->
+                <div class="col-lg-12" style="margin-top: 10px;" id="showFood">
+                    <div class="col-lg-12" id="infomation">
+                        <img src="/Content/images/FoodBg.jpg" style="width:100%"/>
+                    </div>
+                </div>
+                <!--分页栏-->
+                <div class="m-style M-box4" style="width:50%;margin:0px auto;height:1px;">
+
+                </div>
+            </div>
+
+<!--弹框-->
+    <div id="mask" class="mask">
+    </div>
+    <!--显示详情-->
+    <div class="container" style="display:none; position: absolute; left: 15%; top: 20%; z-index: 1003;" id="check">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                菜品详情<a style="cursor: pointer; float: right" id="guanbi"><span class='glyphicon glyphicon-remove'></span></a>
+            </div>
+            <div class="panel-body">
+                <div class="col-sm-2">
+                    <img src="/Content/images/null.jpg" style="width: 100%" id="imgs"/>
+                </div>
+                <div class="col-sm-10" id="detail">
+                    <form role="form" id="form">
+                        <h4 class="col-lg-6" style="height: 28px; line-height: 28px;">编号：<label id="nameid"></label></h4>
+                        <h4 class="col-lg-6" style="line-height:32px"><label style="float:left">名称:</label>
+                            <input type="text" value="" name="txt_name" id="txtname" style="width: 180px;" readonly="true"></h4>
+                        <h4 class="col-lg-6" style="line-height:32px"><label style="float:left">价格:</label><input type="text" value="" name="txtprice" readonly="true" style="width: 180px;" id="txtprice" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" /></h4>
+                        <h4 class="col-lg-6" style="line-height:32px"><label style="float:left">能量:</label><input type="text" value="" name="txtKj" readonly="true" style="width: 180px" id="txtKJ" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" /></h4>
+                        <h4 class="col-lg-6" style="line-height:32px"><label style="float:left">类型:</label><select disabled="disabled" name="type" id="type">
+                            @foreach (System.Data.DataRow s in Model.Rows)
+                            {
+                                <option value="@s["FoodType_name"]">@s["FoodType_name"]</option>
+                            }
+                        </select></h4>
+                        <h4 class="col-sm-6" style="line-height:32px"><label style="float:left">产地:</label><input type="text" value="" name="txtarea" readonly="true" style="width: 185px" id="txtarea" /></h4>
+                        <h4 class="col-sm-12" style="line-height:32px"><label style="float:left">描述:</label><textarea class="form-control" rows="4" style="width: 60%; resize: none;background-color:white" id="txt" name="txt"  disabled="disabled"></textarea></h4>
+                    </form>
+                    <div class="col-lg-6" style="margin-top: 10px;">
+                        <button type="button" class="btn btn-danger pull-right" id="bianji">编辑菜品</button>
+                    </div>
+                    <div class="col-lg-6" style="margin-top: 10px;">
+                        <button type="button" class="btn btn-danger pull-left" id="delete">删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    $(function () {
+        foodtpye();//加载类别
+        })
+
+        //关闭小窗口
+        $("#guanbi").click(function () {
+            $("#check").css("display", "none");
+            $("#mask").hide();
+        })
+        //编辑
+        $("#bianji").click(function () {
+            if ($(this).text() == "保存编辑") {
+                zeroModal.confirm('确认保存吗？', function () {
+                    $.ajax({//必须先ajax先行，不然后面代码会屏蔽传值
+                        type: 'POST',
+                        dataType: 'text',
+                        url: "UpdateFood",
+                        data: $.param({ 'id': $("#nameid").text() }) + '&' + $('form').serialize(),
+                        success: function (data) {
+                            if (data == "成功") {
+                                showToast({
+                                    title: "保存成功！",
+                                    icon: 'success',
+                                    duration: 1200,
+                                    mask: true,
+                                    success: function (res) {
+                                        $("#check").css("display", "none");
+                                        $("#mask").hide();
+                                        //修改后重新显示
+                                        showshow();
+                                    }
+                                })
+                            } else//关闭
+                            {
+                                showToast({
+                                    title: "保存失败！",
+                                    icon: 'success',
+                                    duration: 1200,
+                                    mask: true,
+                                    success: function (res) {
+                                        $("#check").css("display", "none");
+                                        $("#mask").hide();
+                                    }
+                                })
+                            }
+                        }
+                    });
+                    $("#bianji").text("编辑菜品");
+                    $("#delete").attr('disabled', false);
+                    $("#detail").find("select").attr("disabled", true);
+                    $("#txt").attr('disabled', true);
+                    $("#detail").find("input").css("border", "2px solid transparent").attr("readonly", "readonly");
+                });
+            }
+            else {
+                $("#bianji").text("保存编辑");
+                $("#delete").attr('disabled', true);
+                $("#txt").attr('disabled', false);
+                $("#detail").find("select").attr("disabled", false);
+                $("#detail").find("input").css("border", "2px solid red").removeAttr("readonly");
+            }
+        });
+        //删除
+        $("#delete").click(function () {
+            zeroModal.confirm('确认删除吗？', function () {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    url: "DeleteFood",
+                    data: $.param({ 'id': $("#nameid").text() }),
+                    success: function (data) {
+                        if (data == "成功") {
+                            $("#check").css("display", "none");
+                            $("#mask").hide();
+                            showshow();
+                        } else {
+                            $("#check").css("display", "none");
+                            $("#mask").hide();
+                            showshow();
+                        }
+                    }
+                })
+            });
+            
+        })
+
+        //显示菜单类别
+        function foodtpye() {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "FoodType",
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#FoodType").append("<option value='" + item.FoodType_id + "'>" + item.FoodType_name + "</option>");
+                        $('#FoodType').selectpicker('refresh');//刷新select,因为此select不是原生的
+                    });
+                }
+            })
+        }
+        //下拉列表切换事件
+        $("#FoodType").on("change", function (e) {
+            $("#showFood").empty();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "changeFood",
+                data: { foodtype_id: e.target.value, page:1 },
+                success: function (data) {
+                    if (null != data && "" != data) {
+                        $.each(data, function (i, item) {
+                            $("#showFood").append("<div class='col-lg-4'><dl class='food'><dt style='width:63%;height:63%;margin:0px auto'><img src='/Content/images/" + item.Food_pic + "' style='width:100%'/></dt><dd>" + item.Food_name + "</dd><dd>" + item.Food_sale + "元</dd><dd>" + item.Food_ka + "千焦</dd><dd><a href='#' class='detailfood'>详情</a></dd></dl></div>");
+                        });
+                        fenye();//加载分页
+                    } else {
+                        $("#showFood").append("<div class='col-lg-12'><img src='/Content/images/null.jpg' style='width:100%'/></div>")
+                    }
+                }
+
+            })
+        });
+
+        //点击获取菜名
+        $(document).on('click', '.food a[class=detailfood]', function () {
+            var fooddetail=$(this).parent().parent().children().eq(1).text();//获取菜名
+            $("#check").css("display", "block");
+            $("#mask").css("height", $(document).height());
+            $("#mask").css("width", $(document).width());
+            $("#mask").show();
+            //加载信息
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "Fooddetail",
+                data: { fooddetail: fooddetail },
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#imgs").attr('src', "/Content/images/" + item.Food_pic +"");
+                        $("#nameid").text(item.Food_id);
+                        $("#txtname").val(item.Food_name);
+                        $("#txtKJ").val(item.Food_ka);
+                        $("#txtprice").val(item.Food_sale);
+                        $("#type").val(item.FoodType_name);
+                        $("#txtarea").val(item.Food_area);
+                        $("#txt").val(item.Food_txt);
+                    });
+                }
+            })
+        })
+            //分页
+        function fenye()
+        {
+            //获取数据数量
+            $.ajax({
+                type: 'POST',
+                dataType: 'text',
+                url: "Count",
+                data: { foodtype_id: $("#FoodType").val() },
+                success: function (data) {
+                    //data为一个类别的总数
+                    $('.M-box4').pagination({
+                        method: 'post',
+                        async: false,
+                        totalData: data,//总条数
+                        showData: 6,
+                        pageCount: 9, //总页数,默认为9
+                        coping: true,
+                        pageCount: 10,
+                        isHide: true,
+                        callback:
+                            function (api) {
+                                $("#showFood").empty();
+                                $.ajax({
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    url: "changeFood",
+                                    data: { foodtype_id: $("#FoodType").val(), page: (api.getCurrent()) },
+                                    success: function (data) {
+                                        $.each(data, function (i, item) {
+                                            $("#showFood").append("<div class='col-lg-4'><dl class='food'><dt style='width:63%;height:63%;margin:0px auto'><img src='/Content/images/" + item.Food_pic + "' style='width:100%'/></dt><dd>" + item.Food_name + "</dd><dd>" + item.Food_sale + "元</dd><dd>" + item.Food_ka + "千焦</dd><dd><a href='#' class='detailfood'>详情</a></dd></dl></div>");
+                                        });
+                                    }
+                                })
+                            }
+                    });
+                    //结束
+                }
+            });
+
+            
+        }
+
+        function showshow() {
+            $("#showFood").empty();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "changeFood",
+                data: { foodtype_id: $("#FoodType").val(), page: $(".M-box4 span[class=active]").text() },
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#showFood").append("<div class='col-lg-4'><dl class='food'><dt style='width:63%;height:63%;margin:0px auto'><img src='/Content/images/" + item.Food_pic + "' style='width:100%'/></dt><dd>" + item.Food_name + "</dd><dd>" + item.Food_sale + "元</dd><dd>" + item.Food_ka + "千焦</dd><dd><a href='#' class='detailfood'>详情</a></dd></dl></div>");
+                    });
+                }
+            });
+        }//重新显示
+
+</script>

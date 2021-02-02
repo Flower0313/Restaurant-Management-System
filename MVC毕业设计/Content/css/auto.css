@@ -1,0 +1,18 @@
+﻿.reg_ul {
+list-style:none;
+}
+    .reg_ul li {
+    margin:15px auto;
+    position:relative;
+    }
+        .reg_ul li input {
+        border-radius:0.2em;
+        border:1px solid red;
+        width:25%;
+        }
+        .reg_ul li span {
+            position:absolute;
+            left:23%;
+        }
+
+

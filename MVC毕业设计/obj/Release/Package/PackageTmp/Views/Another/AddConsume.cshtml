@@ -1,0 +1,230 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddConsume</title>
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <link href="~/Content/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/auto.css" rel="stylesheet" />
+    <link href="~/Content/vendor/bootstrap/css/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+    <link href="~/Content/css/demo.css" rel="stylesheet" />
+    <link href="~/Content/css/component.css" rel="stylesheet" />
+
+
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.pagination.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="~/Content/dist/js/sb-admin-2.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap-table.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Content/js/alert.js"></script>
+    <script src="~/Content/js/zeroModal.min.js"></script>
+    <script src="~/Content/js/my_scrollbar.js"></script>
+
+    <style type="text/css">
+        /*html {
+            overflow-y: scroll;
+        }*/
+        #tab tr td {
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        #tab tr {
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="~/Content/images/FlowerLogo.jpg" style="position: fixed; width: 100%; height: 100%; opacity: 0.4" />
+    <div style="">
+        <div class="col-lg-12" style="text-align: center">
+            <label style="float:right;margin-top:10px;cursor:pointer" id="back"><span class="glyphicon glyphicon-home"></span>返回主页</label>
+            <label style="font-size: 2vw; font-weight: 800">点餐板块</label>
+        </div>
+        @*单点*@
+        <div class="col-lg-6" style="overflow-y: auto; height: 450px">
+            <div class="col-lg-12">
+                <label style="font-size: 20px;">单点类</label>
+            </div>
+            @foreach (System.Data.DataRow s in Model.Rows)
+            {
+                <div class="col-lg-2 img-circle" style="background-color: white;">
+                    <dl style="text-align: center">
+                        <dt>
+                            <img src="~/Content/images/@s["Food_pic"]" style="width: 50%" class="img-circle"/></dt>
+                        <dd>
+                            <label style="font-size: 11px;">@s["Food_name"]</label></dd>
+                        <dd>
+                            <label style="font-size: 13px;">¥@Convert.ToInt32(Math.Truncate(Convert.ToDouble(s["Food_sale"].ToString())))</label></dd>
+                        <dd><span style="cursor: pointer; color: #cb7f7f" class="add"><i class="glyphicon glyphicon-plus"></i>加入</span></dd>
+                    </dl>
+                </div>
+            }
+        </div>
+        @*套餐*@
+        <div class="col-lg-6" style="overflow-y: auto; height: 450px;">
+            <div class="col-lg-12" id="tan">
+                <label style="font-size: 20px;">套餐类</label>
+            </div>
+        </div>
+
+        @*结算台*@
+        <div class="col-lg-12" style="text-align: center">
+            <label style="font-size: 25px;">结算台</label>
+            <div class="col-lg-12">
+                <div class="col-lg-3"></div>
+                <form name="form" id="list" style="text-align: center" class="col-lg-9">
+                    <table id="tab">
+                        <tr>
+                            <td>客户需求：</td>
+                            <td>
+                                <textarea style="resize: none; width: 200px; height: 50px" id="want"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td>点餐内容：</td>
+                            <td id="text"></td>
+                            <td>
+                                <button type="button" style="border: none; background-color: #95d8f2" id="clear">清空</button></td>
+                        </tr>
+                        <tr>
+                            <td>是否为会员：</td>
+                            <td>
+                                <input type="radio" name="vip" value="是" id="yes" /><label>是</label>
+                                <input type="radio" name="vip" value="否" id="no" /><label>否</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>会员卡号：</td>
+                            <td style="width: 400px;">
+                                <select id="card" disabled="disabled">
+                                    <option value="NULL" id="one">无</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>价格：</td>
+                            <td id="price"></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="col-lg-12" style="text-align: right">
+                <button type="button" style="width: 150px; height: 50px; background-color: #95d8f2; border: none; font-size: 2vw; color: #fbf594;" id="jiesuan">结算</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        var price = 0;
+        $(function () {
+            taocan();
+            select();
+        })
+        //获取菜名
+        $(".add").click(function () {
+            price += parseInt($.trim($(this).parent().parent().children().eq(2).text()).substr(1));
+            $("#text").append($.trim($(this).parent().parent().children().eq(1).text()) + "、");
+            price2();
+        })
+
+        //结算按钮
+        $("#jiesuan").click(function () {
+            if ($("#want").val() == "" || $("#text").text() == "") {
+                zeroModal.alert('请选择需求或完成点餐!');
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    url: "/Another/add",
+                    data: $.param({ 'want': $("#want").val(), 'food': $("#text").text(), "card": $("#card").val(), "price": $("#price").text().substr(1) }) + '&' + $('#list').serialize(),
+                    success: function (data) {
+                        if (data == "成功") {
+                            zeroModal.alert('点餐成功！');
+                            window.location.href = "/Another/AddConsume";
+                        } else if (data == "余额不足") {
+                            zeroModal.alert('余额不足！');
+                        } else {
+                            zeroModal.alert('点餐失败！');
+                        }
+                    }
+                })
+            }
+        })
+
+        //如果不是会员，不能选
+        $("#no").click(function () {
+            $("#card").attr("disabled", true);
+        })
+
+        // 如果是会员，能选
+        $("#yes").click(function () {
+            $("#card").attr("disabled", false);
+        })
+
+        //初始化套餐
+        function taocan() {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "/Another/taocan",
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#tan").after("<div class='col-lg-2' style='text-align: center; background-color: white;border-right:1px solid black;height:120px'><label style='font-size: 11px;background-color:#95d8f2;color:white'>" + item.meal_name + "</label><br /><label>" + item.Food_name + "</label><br/><label style='font-size: 14px' id=tprice>¥" + Math.floor(item.meal_price.toString()) + "</label><br /><label><span style='cursor: pointer; color: #cb7f7f' class='addtao' onclick='add(this)'><i class='glyphicon glyphicon-plus'></i>加入</span></label></div>");
+                    })
+                }
+            })
+        }
+
+        //获取套餐名
+        function add(index) {
+            price += parseInt($.trim($(index).parent().parent().find("label[id='tprice']").html()).substr(1));
+            $("#text").append($.trim($(index).parent().parent().children().eq(0).text()) + "、");
+            price2();
+        }
+
+        //清空按钮
+        $("#clear").click(function () {
+            $("#text").empty();
+            $("#price").empty();
+            $("#price").append("¥" + 0);
+            price = 0;
+        })
+
+        //遍历会员
+        function select() {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "/Another/select",
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#one").after("<option value='" + item.Card_id + "'>" + item.Card_name + "</option>");
+                    })
+                }
+            })
+        }
+
+        //计算价格
+        function price2() {
+            //price += price;
+            $("#price").empty();
+            $("#price").append("¥" + price);
+        }
+
+        $("#back").click(function () {
+            window.location.href="/Index/Index"
+        })
+    </script>
+</body>
+</html>
+

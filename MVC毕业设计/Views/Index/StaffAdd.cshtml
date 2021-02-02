@@ -1,0 +1,261 @@
+﻿@{
+    ViewBag.Title = "StaffAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<link href="~/Content/css/demo.css" rel="stylesheet" />
+<link href="~/Content/css/component.css" rel="stylesheet" />
+<script src="~/Content/vendor/bootstrap/js/datepicker.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<style type="text/css">
+    #tijiao {
+    margin-left:10%;
+    }
+
+    #tijiao:hover {
+        padding: 6px 24px;
+        transition: 0.3s;
+    }
+
+    html {
+        overflow-y: scroll;
+    }
+</style>
+<!-- Page Content 内容页-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw;">员工录入</h1>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2">
+        <div id="showpic" style="height: 200px; width: 65%; margin: 0px auto">
+            <img src="/Content/images/null.jpg" style="width: 100%; height: 198px" />
+        </div>
+        <div style="text-align: center; position: relative; margin-top: 20px;" class="col-lg-12">
+            <label style="font-size: 15px; background-color: #337AB7; width: 74%; color: white"><span class="glyphicon glyphicon-plus-sign"></span>选择图片</label>
+            <input type="file" id="pic" style="height: 33px; position: absolute; top: 0px; left: 15%; opacity: 0; cursor: pointer" />
+        </div>
+    </div>
+    <div class="col-lg-10" >
+        <form name="form" id="addform">
+                <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="name" name="txtname" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">姓名</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="city" name="txtcity" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">城市</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input type="radio" name="sex" checked="checked" value="男" />
+                            <label><i class="fa fa-male fa-2x"></i></label>
+                            &nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="sex" value="女" />
+                            <label><i class="fa fa-female fa-2x"></i></label>
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">性别</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="date" readonly="readonly" name="txtdate" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">出生年月</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="number" name="txtnumber" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength="11" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">手机号</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" type="text" id="address" name="txtaddress" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">详细地址</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            @if (Session["admin"].ToString() != "SuperAdmin")
+                            {
+                                string name = string.Format(@"select Shop_id,Shop_name from Shop where Shop_id=(
+                                    select Shop_id from [dbo].[User] where User_admin='{0}')",Session["admin".ToString()]);
+                                DAL.DBH.GetAll(name);
+                                <select style="width: 200px; height: 30px; font-size: 0.8vw; color: #efb1ab" class="shop">
+                                        <option value="@DAL.DBH.GetAll(name).Rows[0][0].ToString()">@DAL.DBH.GetAll(name).Rows[0][1].ToString()</option>
+                                </select>
+                            }
+                            else
+                            { 
+                                <select style="width: 200px; height: 30px; font-size: 0.8vw; color: #efb1ab" class="shop">
+                                    <option value="*">未选中</option>
+                                    @foreach (System.Data.DataRow s in Model.Rows)
+                                    {
+                                        <option value="@s["Shop_id"]">@s["Shop_name"]</option>
+                                    }
+                                </select>
+                            }
+
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">所属店面</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <select style="width: 200px; height: 30px; font-size: 0.8vw; color: #efb1ab" id="department">
+                                <option value="*">未选择</option>
+                                <option value="A001">销售部</option>
+                                <option value="A002">市场部</option>
+                                <option value="A003">公关部</option>
+                                <option value="A004">服务部</option>
+                                <option value="A005">经理</option>
+                                <option value="A006">营养师</option>
+                            </select>
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">所属部门</span>
+                            </label>
+                        </span>
+                    </div>
+                    <div class="col-lg-4">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" name="txtsalary" type="text" id="Text4" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">基本工资</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <span class="input input--minoru">
+                            <input class="input__field input__field--minoru" name="txtIdcard" type="text" id="txtIdcard2" maxlength="18" />
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">身份证</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-12">
+                        <span class="input input--minoru">
+                            <textarea name="txtarea" style="resize: none; width: 260px; height: 60px; color: #efb1ab; font-weight: 600"></textarea>
+                            <label class="input__label input__label--minoru" for="input-13">
+                                <span class="input__label-content input__label-content--minoru">员工简介</span>
+                            </label>
+                        </span>
+                    </div>
+                </div>
+        </form>
+        <button type="button" class="btn btn-outline btn-primary" id="tijiao">确认录入</button>
+    </div>
+</div>
+
+<script>
+    var pics = "wu.jpg";
+    $(function () {
+        datepicker();
+    })
+    //日期选项
+    function datepicker() {
+        $.fn.datepicker.dates['cn'] = {   //切换为中文显示  
+            days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+            daysShort: ["日", "一", "二", "三", "四", "五", "六", "七"],
+            daysMin: ["日", "一", "二", "三", "四", "五", "六", "七"],
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            today: "今天",
+            clear: "清除"
+        };
+
+        $('#date').datepicker({
+            autoclose: true, //自动关闭  
+            beforeShowDay: $.noop,    //在显示日期之前调用的函数  
+            calendarWeeks: false,     //是否显示今年是第几周  
+            clearBtn: false,          //显示清除按钮  
+            daysOfWeekDisabled: [],   //星期几不可选  
+            endDate: Infinity,        //日历结束日期  
+            forceParse: true,         //是否强制转换不符合格式的字符串  
+            format: 'yyyy-mm-dd',     //日期格式  
+            keyboardNavigation: true, //是否显示箭头导航  
+            language: 'cn',           //语言  
+            minViewMode: 0,
+            orientation: "auto",      //方向  
+            rtl: false,
+            startDate: -Infinity,     //日历开始日期  
+            startView: 0,             //开始显示  
+            todayBtn: "linked",          //今天按钮  
+            todayHighlight: true,    //今天高亮  
+            weekStart: 0              //星期几是开始  
+        });
+    }
+
+    //提交事件
+    $("#tijiao").click(function () {
+        var count = 0;
+        //alert(document.form.elements.length);
+        for (var i = 0; i < document.form.elements.length - 1; i++) {
+            if (document.form.elements[i].value == "") {
+                count++;
+            }
+        }
+        if (count != 0) {
+            zeroModal.alert('请填写完整信息!');
+        } else {
+            //执行ajax，增加数据
+            $.ajax({
+                type: 'POST',
+                dataType: 'text',
+                url: "/Index/StaffAddsure",
+                data: $.param({ 'pics': pics, 'shop': $(".shop").val(), 'depart': $("#department").val() }) + '&' + $('#addform').serialize(),
+                success: function (data) {
+                    if (data == "成功") {
+                        zeroModal.alert('恭喜!添加成功!');
+                        window.location.href = "/Index/Staff";
+                    } else {
+                        zeroModal.alert('添加失败!');
+                    }
+                }
+            });
+        }
+
+    })
+
+    //图片选择
+    $("#pic").change(function () {
+        var str = $(this).val();
+        $("#showpic").empty();
+        if (str !== "") {
+            var arr = str.split("\\");
+            var file_name = arr[arr.length - 1];
+            pics = file_name;
+            $(this).next("button").text(file_name);
+            $("#showpic").append("<img src='/Content/images/" + file_name + "' style='width:100%;height:198px;' />");
+        }
+    })
+</script>

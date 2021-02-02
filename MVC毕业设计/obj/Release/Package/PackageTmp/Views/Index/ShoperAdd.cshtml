@@ -1,0 +1,271 @@
+﻿@{
+    ViewBag.Title = "ShoperAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/datepicker.js"></script>
+
+<style type="text/css">
+    html {
+        overflow-y: scroll;
+    }
+        .tdd {
+            margin-top: 5px;
+        }
+        #showpic{
+        -webkit-box-shadow: yellow 0px 0px 10px;  
+        -moz-box-shadow: yellow 0px 0px 10px;  
+        box-shadow: yellow 0px 0px 10px;  
+        }
+    </style>
+
+<!--<img src="../images/ShopAdd.jpg" style="position: fixed; width: 100%; height: 100%;opacity:0.5" />-->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header" style="font-size: 1.5vw; font-family: 黑体">店主添加</h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!--左边信息显示-->
+                <div class="col-lg-3" style="padding: 20px 0px;">
+                    <p style="text-align: center; font-family: 黑体; font-size: 1.8vw; font-weight: 800; color: #977ff1; background-color: yellow">已有店主</p>
+                    <p style="text-align: center; font-family: 黑体; font-size: 6vw; font-weight: 800; color: #e44343"><span>@ViewBag.shopercount</span></p>
+                </div>
+                <!--店主信息录入-->
+                <div class="col-lg-9">
+                    <!--选择头像-->
+                    <div class="col-lg-4" style="margin-top:30px">
+                        <div id="showpic" style="height:200px;width:65%;margin:0px auto ">
+                            <img src="/Content/images/null.jpg" style="width:100%;height:198px"/>
+                        </div>
+                        <div style="text-align: center; position: relative; margin-top: 20px;" class="col-lg-12">
+                            <label style="font-size: 20px; background-color: yellow; width: 74%; color: #5aa2f1"><span class="glyphicon glyphicon-plus-sign"></span>选择图片</label>
+                            <input type="file" id="pic" style="height: 33px; position: absolute; top: 0px; left: 15%; opacity: 0; cursor: pointer" />
+                        </div>
+                        <!--展示图片-->
+                        
+                    </div>
+                    <!--增加数据-->
+                    <div class="col-lg-8">
+                        <!--<div class="panel panel-red">
+                        <div class="panel-heading">
+                            信息录入
+                        </div>
+                    </div>-->
+                        <form name="form" id="list">
+                        <!--名称-->
+                        <div class="tdd">
+                            <label>店主名称</label>
+                            <div style="width: 40%;">
+                                <input class="form-control" placeholder="请输入..." name="txtname"/>
+                            </div>
+                        </div>
+                        <!--性别-->
+                        <div class="tdd">
+                            <label>性别</label>
+                            <div style="width: 60%;">
+                                <label class="radio-inline">
+                                    <input type="radio" name="sex" value="男" checked="checked" />男
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="sex" value="女" />女
+                                </label>
+                            </div>
+                        </div>
+                        <!--城市-->
+                        <div class="tdd">
+                            <label>所在城市</label>
+                            <div style="width: 50%; overflow: hidden">
+                                <select class="form-control" style="width: 50%; float: left" id="province">
+                                    <option value="0" selected="selected">-请选择省份-</option>
+                                </select>
+                                <select class="form-control" style="width: 50%; float: left" id="city" name="city">
+                                    <option value="0" selected="selected">-请选择市区-</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--具体地址-->
+                        <div class="tdd">
+                            <label>具体地址</label>
+                            <div style="width: 50%;">
+                                <input class="form-control" placeholder="请输入..." name="address"/>
+                            </div>
+                        </div>
+                        <!--出生日期-->
+                        <div class="tdd">
+                            <label>出生日期</label>
+                            <div style="width: 30%;">
+                                <input type='text' class='form-control selectData' id='date' name='date' value='出生日期' readonly="readonly" style="background-color:white"/>
+                            </div>
+                        </div>
+                        <!--基本工资-->
+                        <div class="tdd">
+                            <label>基本工资</label>
+                            <div style="width: 30%;">
+                                <input class="form-control" placeholder="请输入工资..." onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" name="salary"/>
+                            </div>
+                        </div>
+                        <!--联系电话-->
+                        <div class="tdd">
+                            <label>联系电话</label>
+                            <div style="width: 30%;">
+                                <input class="form-control" placeholder="请输入电话..." onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength="11" name="number"/>
+                            </div>
+                        </div>
+                        <!--身份证-->
+                        <div class="tdd">
+                            <label>身份证</label>
+                            <div style="width: 30%;">
+                                <input class="form-control" placeholder="请输入身份证..." maxlength="18" name="idcard"/>
+                            </div>
+                        </div>
+                        
+                        <!--分区-->
+                        <div class="tdd">
+                            <label>店主简介</label>
+                            <div style="width: 50%;">
+                                <textarea class="form-control" rows="3" style="resize: none" name="txtarea"></textarea>
+                            </div>
+                        </div>
+                        </form>
+
+                        <!--分区-->
+                        <div class="tdd" style="width: 50%">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" id="doit">添加店主</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+<script>
+        var pro;//省份
+        var count = 0;
+        var pics="wu.jpg";//头像
+
+        //pro[$("#province").val() - 1]
+        $(function () {
+            liandong();
+            datepicker();
+        })
+        //图片选择
+        $("#pic").change(function () {
+            var str = $(this).val();
+            $("#showpic").empty();
+            if (str !== "") {
+                var arr = str.split("\\");
+                var file_name = arr[arr.length - 1];
+                pics = file_name;
+                $(this).next("button").text(file_name);
+                $("#showpic").append("<img src='/Content/images/" + file_name + "' style='width:100%;height:198px;' />");
+            }
+
+        })
+
+        //级联
+        function liandong() {
+            pro = ["河南", "山东", "黑龙江", "湖南", "上海", "北京"];
+            var city = [["郑州", "开封", "新政", "濮阳", "平顶山", "洛阳", "三门峡"], ["济南", "日照", "烟台", "德州", "聊城"], ["哈尔滨", "齐齐哈尔", "佳木斯", "牡丹江"],
+            ["长沙", "益阳", "常德", "湘潭", "株洲"], ["静安区", "浦东新区", "黄浦区", "徐汇区", "虹口区", "杨浦区", "陆家嘴"], ["东城区", "西城区", "朝阳区", "海淀区"]];
+            //初始化省份下拉列表  
+            for (var i = 0; i < pro.length; i++) {
+                $("#province").append($("<option></option>").val(i + 1).html(pro[i]));
+            }
+            //为省份下拉列表绑定change事件  
+            $("#province").change(function () {
+                var index = $(this).val() - 1;//获取当前省的下标  
+                $("#city").prop("length", 1);//清空原有的数据  
+                for (var i = 0; i < city[index].length; i++) {//重新为市赋值  
+                    $("#city").append($("<option>").val(city[index][i]).html(city[index][i]));
+                }
+            });
+        }
+
+        //日期选项
+        function datepicker() {
+            $.fn.datepicker.dates['cn'] = {   //切换为中文显示  
+                days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+                daysShort: ["日", "一", "二", "三", "四", "五", "六", "七"],
+                daysMin: ["日", "一", "二", "三", "四", "五", "六", "七"],
+                months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                today: "今天",
+                clear: "清除"
+            };
+
+            $('#date').datepicker({
+                autoclose: true, //自动关闭  
+                beforeShowDay: $.noop,    //在显示日期之前调用的函数  
+                calendarWeeks: false,     //是否显示今年是第几周  
+                clearBtn: false,          //显示清除按钮  
+                daysOfWeekDisabled: [],   //星期几不可选  
+                endDate: Infinity,        //日历结束日期  
+                forceParse: true,         //是否强制转换不符合格式的字符串  
+                format: 'yyyy-mm-dd',     //日期格式  
+                keyboardNavigation: true, //是否显示箭头导航  
+                language: 'cn',           //语言  
+                minViewMode: 0,
+                orientation: "auto",      //方向  
+                rtl: false,
+                startDate: -Infinity,     //日历开始日期  
+                startView: 0,             //开始显示  
+                todayBtn: "linked",          //今天按钮  
+                todayHighlight: true,    //今天高亮  
+                weekStart: 0              //星期几是开始  
+            });
+        }
+
+        $("#doit").click(function () {
+            //alert($("input[name='sex']:checked").val());//获取性别
+            var count = 0;
+            //alert(document.form.elements[6].value);
+                //判定文本框
+                for (var i = 0; i < document.form.elements.length - 1; i++) {
+                    if (document.form.elements[i].value == "") {
+                        count++;
+                    }
+                }
+                if (document.form.elements[3].value == "0" || document.form.elements[4].value == "0" || count != 0) {
+                    //失败
+                    $("#doit").shake(2, 10, 400); //抖动
+                } else if (count == 0) {
+                    //成功
+                    zeroModal.confirm('确认保存吗？', function () {
+                        $.ajax({
+                            type: 'POST',
+                            dataType: 'text',
+                            url: "/Index/ShoperAddsrue",
+                            data: $.param({ 'pro': pro[$("#province").val() - 1], 'pics': pics }) + '&' + $('#list').serialize(),
+                            success: function (data) {
+                                if (data == "成功") {
+                                    showToast({
+                                        title: "添加成功！",
+                                        icon: 'success',
+                                        duration: 1500,
+                                        mask: true,
+                                        success: function (res) {
+                                            window.location.href = "/Index/ShoperAdd";
+                                        }
+                                    });
+                                } else {
+                                    showToast({
+                                        title: "添加失败！",
+                                        icon: 'success',
+                                        duration: 1500,
+                                        mask: true,
+                                        success: function (res) {
+                                            window.location.href = "/Index/ShoperAdd";
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    })
+                }
+        })
+        
+    </script>

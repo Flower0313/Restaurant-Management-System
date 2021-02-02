@@ -1,0 +1,185 @@
+﻿@using System.Data;
+@model System.Data.DataTable
+@{
+    ViewBag.Title = "Lost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<script src="~/Content/js/zeroModal.min.js"></script>
+<style type="text/css">
+    .mask {
+        position: absolute;
+        top: 0px;
+        filter: alpha(opacity=60);
+        background-color: #777;
+        z-index: 1002;
+        left: 0px;
+        opacity: 0.5;
+        -moz-opacity: 0.5;
+    }
+
+    .Member dd {
+        margin: 20px 0px;
+        text-align: left;
+        margin-left: 165px;
+        text-align: center;
+        background-color: white;
+    }
+
+    .Member {
+        clear: both;
+    }
+
+    .every {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw; font-family: 微软雅黑;">会员挂失与找回</h1>
+        </div>
+    </div>
+</div>
+
+<!--主要内容-->
+<div class="row">
+    <div style="width: 70%; margin: 0px auto">
+        <div class="col-lg-3" style="margin-right: 2%">
+            <select class="form-control" id="state">
+                <option value="">全部</option>
+                <option value="冻结">冻结</option>
+                <option value="正常">正常</option>
+            </select>
+        </div>
+        <!--搜索框-->
+        <div class="input-group col-lg-8">
+            <input type="text" class="form-control" id="txtsearch">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" id="searchbtn">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+
+    <div class="col-lg-12" id="main">
+
+        @foreach (System.Data.DataRow s in Model.Rows)
+        {
+            <div class="col-lg-3 every" style="border-bottom: 1px solid #d5a7f6;">
+                <dl class="Member">
+                    <dt style='float: left; width: 50%; height: 50%'>
+                        <img src="~/Content/images/@s["Card_pic"]" style="width: 100%;height:190px" /></dt>
+                    <dd>@s["Card_id"]</dd>
+                    <dd>@s["Card_name"]</dd>
+                    <dd>@s["vip_name"]</dd>
+                    <dd>@s["Card_state"]</dd>
+                    <dd>
+                        @if (s["Card_state"].ToString().Trim() == "冻结")
+                        {
+                            <button type="button" class="btn btn-primary btn-xs rele" >恢复</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-xs lost" style="background-color: red;color:white">挂失</button>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        }
+
+
+    </div>
+
+</div>
+<script>
+    
+    var update = "";
+    var mstate = "";
+    $("#state").change(function () {
+        show();
+    })
+
+    //显示
+    function show() {
+        $("#main").empty();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "Lost",
+            data: $.param({ 'state': $("#state").val(), 'name': $("#txtsearch").val(), 'update': update,'mstate':mstate}),
+            success: function (data) {
+                if (jQuery.isEmptyObject(data) == false) {
+                    $.each(data, function (i, item) {
+                        if (item.Card_state == "正常") {
+                            $("#main").append("<div class='col-lg-3 every' style='border-bottom: 1px solid #d5a7f6;'><dl class='Member'><dt style='float: left; width: 50%; height: 50%'><img src='/Content/images/" + item.Card_pic + "' style='width: 100%;height:190px'/></dt><dd>" + item.Card_id + "</dd><dd>" + item.Card_name + "</dd><dd>" + item.vip_name + "</dd><dd>" + item.Card_state + "</dd><dd><button type='button' class='btn btn-xs lost' style='background-color:red;color:white' onclick='lost(this)'>挂失</button></dd></dl></div>");
+                        } else {
+                            $("#main").append("<div class='col-lg-3 every' style='border-bottom: 1px solid #d5a7f6;'><dl class='Member'><dt style='float: left; width: 50%; height: 50%'><img src='/Content/images/" + item.Card_pic + "' style='width: 100%;height:190px'/></dt><dd>" + item.Card_id + "</dd><dd>" + item.Card_name + "</dd><dd>" + item.vip_name + "</dd><dd>" + item.Card_state + "</dd><dd><button type='button' class='btn btn-primary btn-xs rele' onclick='rele(this)'>恢复</button></dd></dl></div>");
+                        }
+                    });
+                } else {
+                    $("#main").append("<div class='col-lg-12' style='text-align:center;margin-top:200px;'><label style='font-size:3.5vw'>无内容</label></div>")
+                }
+                update = "";
+                mstate = "";
+            }
+        });
+    }
+
+    $("#searchbtn").click(function () {
+        
+        $("#main").empty();
+        show();
+    })
+    //回车按键搜索
+    $("#txtsearch").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $("#main").empty();
+            show();
+        }
+    });
+
+    //恢复按钮
+    $(".rele").click(function () {
+        update = $(this).parent().parent().find("dd").eq(0).html();//获取编号
+        mstate = $(this).parent().parent().find("dd").eq(3).html();//获取状态
+        zeroModal.confirm('确认恢复吗？', function () {
+            show();
+        })
+        
+    })
+
+    //挂失按钮
+    $(".lost").click(function () {
+        update = $(this).parent().parent().find("dd").eq(0).html();//获取编号
+        mstate = $(this).parent().parent().find("dd").eq(3).html();//获取状态
+        zeroModal.confirm('确认挂失吗？', function () {
+            show();
+        })
+    })
+
+    //挂失按钮2
+    function lost(aa) {
+        update = $(aa).parent().parent().find("dd").eq(0).html();
+        mstate = $(aa).parent().parent().find("dd").eq(3).html();
+        zeroModal.confirm('确认挂失吗？', function () {
+            show();
+        })
+        
+    }
+
+    //恢复按钮2
+    function rele(aa) {
+        update = $(aa).parent().parent().find("dd").eq(0).html();
+        mstate = $(aa).parent().parent().find("dd").eq(3).html();
+        zeroModal.confirm('确认恢复吗？', function () {
+            show();
+        })
+        
+    }
+    
+
+
+</script>

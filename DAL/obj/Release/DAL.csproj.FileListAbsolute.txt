@@ -1,0 +1,5 @@
+D:\Users\dell-pc\Desktop\MVC毕业设计\DAL\bin\Release\DAL.dll
+D:\Users\dell-pc\Desktop\MVC毕业设计\DAL\bin\Release\DAL.pdb
+D:\Users\dell-pc\Desktop\MVC毕业设计\DAL\obj\Release\DAL.dll
+D:\Users\dell-pc\Desktop\MVC毕业设计\DAL\obj\Release\DAL.pdb
+D:\Users\dell-pc\Desktop\MVC毕业设计\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache

@@ -1,0 +1,1444 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FlowerNutritionModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="FlowerNutritionModelStoreContainer">
+          <EntitySet Name="Auto" EntityType="FlowerNutritionModel.Store.Auto" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Consume" EntityType="FlowerNutritionModel.Store.Consume" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Department" EntityType="FlowerNutritionModel.Store.Department" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Food" EntityType="FlowerNutritionModel.Store.Food" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FoodType" EntityType="FlowerNutritionModel.Store.FoodType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Forget" EntityType="FlowerNutritionModel.Store.Forget" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Meal" EntityType="FlowerNutritionModel.Store.Meal" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MealFood" EntityType="FlowerNutritionModel.Store.MealFood" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Member" EntityType="FlowerNutritionModel.Store.Member" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Record" EntityType="FlowerNutritionModel.Store.Record" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Shop" EntityType="FlowerNutritionModel.Store.Shop" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Shop_Staff" EntityType="FlowerNutritionModel.Store.Shop_Staff" store:Type="Tables" store:Schema="dbo" store:Name="Shop_Staff">
+            <DefiningQuery>SELECT 
+      [Shop_Staff].[id] AS [id], 
+      [Shop_Staff].[staff_id] AS [staff_id], 
+      [Shop_Staff].[shop_id] AS [shop_id]
+      FROM [dbo].[Shop_Staff] AS [Shop_Staff]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Staff" EntityType="FlowerNutritionModel.Store.Staff" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="FlowerNutritionModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Vip" EntityType="FlowerNutritionModel.Store.Vip" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="staffdetail" EntityType="FlowerNutritionModel.Store.staffdetail" store:Type="Views" store:Schema="dbo" store:Name="staffdetail">
+            <DefiningQuery>SELECT 
+      [staffdetail].[staff_id] AS [staff_id], 
+      [staffdetail].[staff_name] AS [staff_name], 
+      [staffdetail].[staff_bir] AS [staff_bir], 
+      [staffdetail].[staff_sex] AS [staff_sex], 
+      [staffdetail].[staff_city] AS [staff_city], 
+      [staffdetail].[staff_address] AS [staff_address], 
+      [staffdetail].[staff_idcard] AS [staff_idcard], 
+      [staffdetail].[Shop_city] AS [Shop_city], 
+      [staffdetail].[staff_number] AS [staff_number], 
+      [staffdetail].[Department_name] AS [Department_name], 
+      [staffdetail].[Shop_name] AS [Shop_name], 
+      [staffdetail].[staff_score] AS [staff_score], 
+      [staffdetail].[staff_salary] AS [staff_salary], 
+      [staffdetail].[staff_begin] AS [staff_begin], 
+      [staffdetail].[staff_state] AS [staff_state], 
+      [staffdetail].[staff_txt] AS [staff_txt], 
+      [staffdetail].[staff_pic] AS [staff_pic]
+      FROM [dbo].[staffdetail] AS [staffdetail]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="v_Staff" EntityType="FlowerNutritionModel.Store.v_Staff" store:Type="Views" store:Schema="dbo" store:Name="v_Staff">
+            <DefiningQuery>SELECT 
+      [v_Staff].[num] AS [num], 
+      [v_Staff].[staff_id] AS [staff_id], 
+      [v_Staff].[staff_name] AS [staff_name], 
+      [v_Staff].[staff_bir] AS [staff_bir], 
+      [v_Staff].[staff_sex] AS [staff_sex], 
+      [v_Staff].[staff_city] AS [staff_city], 
+      [v_Staff].[staff_address] AS [staff_address], 
+      [v_Staff].[staff_idcard] AS [staff_idcard], 
+      [v_Staff].[staff_number] AS [staff_number], 
+      [v_Staff].[Department_id] AS [Department_id], 
+      [v_Staff].[shop_id] AS [shop_id], 
+      [v_Staff].[staff_score] AS [staff_score], 
+      [v_Staff].[staff_salary] AS [staff_salary], 
+      [v_Staff].[staff_begin] AS [staff_begin], 
+      [v_Staff].[staff_state] AS [staff_state], 
+      [v_Staff].[staff_txt] AS [staff_txt], 
+      [v_Staff].[staff_pic] AS [staff_pic], 
+      [v_Staff].[shop_name] AS [shop_name], 
+      [v_Staff].[department_name] AS [department_name]
+      FROM [dbo].[v_Staff] AS [v_Staff]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Auto_Shop" Association="FlowerNutritionModel.Store.FK_Auto_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Auto" EntitySet="Auto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consume_Shop" Association="FlowerNutritionModel.Store.FK_Consume_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Consume" EntitySet="Consume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Food_FoodType" Association="FlowerNutritionModel.Store.FK_Food_FoodType">
+            <End Role="FoodType" EntitySet="FoodType" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Food_Shop" Association="FlowerNutritionModel.Store.FK_Food_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forget_Shop" Association="FlowerNutritionModel.Store.FK_Forget_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Forget" EntitySet="Forget" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meal&amp;Food_Food" Association="FlowerNutritionModel.Store.FK_Meal&amp;Food_Food">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="MealFood" EntitySet="MealFood" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Shop" Association="FlowerNutritionModel.Store.FK_Member_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Staff" Association="FlowerNutritionModel.Store.FK_Member_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Vip" Association="FlowerNutritionModel.Store.FK_Member_Vip">
+            <End Role="Vip" EntitySet="Vip" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Consume" Association="FlowerNutritionModel.Store.FK_Record_Consume">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Food" Association="FlowerNutritionModel.Store.FK_Record_Food">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Shop" Association="FlowerNutritionModel.Store.FK_Record_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="FlowerNutritionModel.Store.FK_Staff_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Shop" Association="FlowerNutritionModel.Store.FK_Staff_Shop">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Shop1" Association="FlowerNutritionModel.Store.FK_Staff_Shop1">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Shop" Association="FlowerNutritionModel.Store.FK_User_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Auto">
+          <Key>
+            <PropertyRef Name="Auto_id" />
+          </Key>
+          <Property Name="Auto_id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Auto_date" Type="datetime" Nullable="false" />
+          <Property Name="Shop_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Consume">
+          <Key>
+            <PropertyRef Name="Cus_id" />
+          </Key>
+          <Property Name="Cus_id" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="Cus_detail" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Cus_money" Type="money" Nullable="false" />
+          <Property Name="Ifvip" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="Cus_want" Type="nvarchar" MaxLength="300" />
+          <Property Name="Cus_time" Type="datetime" Nullable="false" />
+          <Property Name="Cus_way" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Card_id" Type="bigint" />
+          <Property Name="shop_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_id" />
+          </Key>
+          <Property Name="Department_id" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Department_name" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Department_txt" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Food_id" />
+          </Key>
+          <Property Name="Food_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Food_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Food_sale" Type="money" Nullable="false" />
+          <Property Name="Food_ka" Type="decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Food_area" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Food_txt" Type="text" Nullable="false" />
+          <Property Name="shop_id" Type="int" />
+          <Property Name="FoodType_id" Type="int" />
+          <Property Name="Food_pic" Type="nvarchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="FoodType">
+          <Key>
+            <PropertyRef Name="FoodType_id" />
+          </Key>
+          <Property Name="FoodType_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FoodType_name" Type="nvarchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Forget">
+          <Key>
+            <PropertyRef Name="Forget_id" />
+          </Key>
+          <Property Name="Forget_id" Type="int" Nullable="false" />
+          <Property Name="Forget_txt" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="shop_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="meal_id" />
+            <PropertyRef Name="meal_name" />
+          </Key>
+          <Property Name="meal_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="meal_name" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="meal_price" Type="money" />
+        </EntityType>
+        <EntityType Name="MealFood">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="food_id" Type="int" />
+          <Property Name="meal_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="Card_id" />
+          </Key>
+          <Property Name="Card_id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Card_name" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Card_bir" Type="date" Nullable="false" />
+          <Property Name="Cus_height" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Cus_weight" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="BFR" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="Card_balance" Type="money" Nullable="false" />
+          <Property Name="Card_integral" Type="bigint" />
+          <Property Name="Card_pic" Type="nvarchar" MaxLength="50" />
+          <Property Name="vip_id" Type="int" Nullable="false" />
+          <Property Name="Card_begin" Type="date" Nullable="false" />
+          <Property Name="Card_end" Type="date" Nullable="false" />
+          <Property Name="Card_sex" Type="char" MaxLength="3" />
+          <Property Name="Id_card" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Card_number" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Card_state" Type="nchar" Nullable="false" MaxLength="2" />
+          <Property Name="staff_id" Type="int" />
+          <Property Name="shop_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Record">
+          <Key>
+            <PropertyRef Name="Record_id" />
+          </Key>
+          <Property Name="Record_id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Cus_id" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Card_id" Type="bigint" />
+          <Property Name="shop_id" Type="int" Nullable="false" />
+          <Property Name="food_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Shop_id" />
+          </Key>
+          <Property Name="Shop_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Shop_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Shop_begin" Type="date" Nullable="false" />
+          <Property Name="Shop_address" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Shop_city" Type="nvarchar" MaxLength="20" />
+          <Property Name="Shop_province" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Shop_person" Type="bigint" />
+          <Property Name="Shop_money" Type="money" />
+          <Property Name="Shop_number" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Shop_pay" Type="money" Nullable="false" />
+          <Property Name="Shop_state" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="Shop_end" Type="date" />
+          <Property Name="Shop_pic" Type="nvarchar" MaxLength="100" />
+          <Property Name="State" Type="nvarchar" MaxLength="20" />
+          <Property Name="Shop_txt" Type="text" />
+          <Property Name="Staff_id" Type="int" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“FlowerNutrition.dbo.Shop_Staff”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="Shop_Staff">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="staff_id" />
+            <PropertyRef Name="shop_id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="staff_id" Type="int" Nullable="false" />
+          <Property Name="shop_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Name="staff_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="staff_name" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="staff_bir" Type="date" Nullable="false" />
+          <Property Name="staff_sex" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="staff_city" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="staff_address" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="staff_idcard" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="staff_number" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Department_id" Type="nvarchar" MaxLength="20" />
+          <Property Name="shop_id" Type="int" Nullable="false" />
+          <Property Name="staff_score" Type="decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="staff_salary" Type="money" />
+          <Property Name="staff_begin" Type="date" Nullable="false" />
+          <Property Name="staff_state" Type="nchar" MaxLength="2" />
+          <Property Name="staff_txt" Type="nvarchar" MaxLength="300" />
+          <Property Name="staff_pic" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="User_admin" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="User_pwd" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Shop_id" Type="int" />
+        </EntityType>
+        <EntityType Name="Vip">
+          <Key>
+            <PropertyRef Name="vip_id" />
+          </Key>
+          <Property Name="vip_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="vip_name" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="vip_discount" Type="decimal" Nullable="false" Precision="3" Scale="2" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“FlowerNutrition.dbo.staffdetail”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="staffdetail">
+          <Key>
+            <PropertyRef Name="staff_id" />
+            <PropertyRef Name="staff_name" />
+            <PropertyRef Name="staff_bir" />
+            <PropertyRef Name="staff_sex" />
+            <PropertyRef Name="staff_city" />
+            <PropertyRef Name="staff_address" />
+            <PropertyRef Name="staff_idcard" />
+            <PropertyRef Name="staff_number" />
+            <PropertyRef Name="Department_name" />
+            <PropertyRef Name="Shop_name" />
+            <PropertyRef Name="staff_score" />
+            <PropertyRef Name="staff_begin" />
+          </Key>
+          <Property Name="staff_id" Type="int" Nullable="false" />
+          <Property Name="staff_name" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="staff_bir" Type="date" Nullable="false" />
+          <Property Name="staff_sex" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="staff_city" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="staff_address" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="staff_idcard" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Shop_city" Type="nvarchar" MaxLength="20" />
+          <Property Name="staff_number" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Department_name" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Shop_name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="staff_score" Type="decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="staff_salary" Type="money" />
+          <Property Name="staff_begin" Type="date" Nullable="false" />
+          <Property Name="staff_state" Type="nchar" MaxLength="2" />
+          <Property Name="staff_txt" Type="nvarchar" MaxLength="300" />
+          <Property Name="staff_pic" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--生成过程中发现错误:
+      警告 6002: 表/视图“FlowerNutrition.dbo.v_Staff”未定义主键。已推断出该键，并将定义创建为只读的表/视图。
+      -->
+        <EntityType Name="v_Staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+            <PropertyRef Name="staff_name" />
+            <PropertyRef Name="staff_bir" />
+            <PropertyRef Name="staff_sex" />
+            <PropertyRef Name="staff_city" />
+            <PropertyRef Name="staff_address" />
+            <PropertyRef Name="staff_idcard" />
+            <PropertyRef Name="staff_number" />
+            <PropertyRef Name="shop_id" />
+            <PropertyRef Name="staff_score" />
+            <PropertyRef Name="staff_begin" />
+          </Key>
+          <Property Name="num" Type="bigint" />
+          <Property Name="staff_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="staff_name" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="staff_bir" Type="date" Nullable="false" />
+          <Property Name="staff_sex" Type="nchar" Nullable="false" MaxLength="1" />
+          <Property Name="staff_city" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="staff_address" Type="nvarchar" Nullable="false" MaxLength="150" />
+          <Property Name="staff_idcard" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="staff_number" Type="nvarchar" Nullable="false" MaxLength="20" />
+          <Property Name="Department_id" Type="nvarchar" MaxLength="20" />
+          <Property Name="shop_id" Type="int" Nullable="false" />
+          <Property Name="staff_score" Type="decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="staff_salary" Type="money" />
+          <Property Name="staff_begin" Type="date" Nullable="false" />
+          <Property Name="staff_state" Type="nchar" MaxLength="2" />
+          <Property Name="staff_txt" Type="nvarchar" MaxLength="300" />
+          <Property Name="staff_pic" Type="nvarchar" MaxLength="50" />
+          <Property Name="shop_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="department_name" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <Association Name="FK_Auto_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="1" />
+          <End Role="Auto" Type="FlowerNutritionModel.Store.Auto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Auto">
+              <PropertyRef Name="Shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consume_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="1" />
+          <End Role="Consume" Type="FlowerNutritionModel.Store.Consume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Consume">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Food_FoodType">
+          <End Role="FoodType" Type="FlowerNutritionModel.Store.FoodType" Multiplicity="0..1" />
+          <End Role="Food" Type="FlowerNutritionModel.Store.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodType">
+              <PropertyRef Name="FoodType_id" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="FoodType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Food_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="0..1" />
+          <End Role="Food" Type="FlowerNutritionModel.Store.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forget_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="0..1" />
+          <End Role="Forget" Type="FlowerNutritionModel.Store.Forget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Forget">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meal&amp;Food_Food">
+          <End Role="Food" Type="FlowerNutritionModel.Store.Food" Multiplicity="0..1" />
+          <End Role="MealFood" Type="FlowerNutritionModel.Store.MealFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Food_id" />
+            </Principal>
+            <Dependent Role="MealFood">
+              <PropertyRef Name="food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="1" />
+          <End Role="Member" Type="FlowerNutritionModel.Store.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Staff">
+          <End Role="Staff" Type="FlowerNutritionModel.Store.Staff" Multiplicity="0..1" />
+          <End Role="Member" Type="FlowerNutritionModel.Store.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="staff_id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Vip">
+          <End Role="Vip" Type="FlowerNutritionModel.Store.Vip" Multiplicity="1" />
+          <End Role="Member" Type="FlowerNutritionModel.Store.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vip">
+              <PropertyRef Name="vip_id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="vip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Consume">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="1" />
+          <End Role="Record" Type="FlowerNutritionModel.Store.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Food">
+          <End Role="Food" Type="FlowerNutritionModel.Store.Food" Multiplicity="0..1" />
+          <End Role="Record" Type="FlowerNutritionModel.Store.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Food_id" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="1" />
+          <End Role="Record" Type="FlowerNutritionModel.Store.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Department">
+          <End Role="Department" Type="FlowerNutritionModel.Store.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="FlowerNutritionModel.Store.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="Department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Shop">
+          <End Role="Department" Type="FlowerNutritionModel.Store.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="FlowerNutritionModel.Store.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="Department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Shop1">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="1" />
+          <End Role="Staff" Type="FlowerNutritionModel.Store.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Store.Shop" Multiplicity="0..1" />
+          <End Role="User" Type="FlowerNutritionModel.Store.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--生成过程中发现错误:
+      警告 6013: 表/视图“FlowerNutrition.dbo.m_tdby”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="m_tdby">
+        <Property Name="tdby" Type="int" />
+      </EntityType>
+      生成过程中发现错误:
+      警告 6013: 表/视图“FlowerNutrition.dbo.m_today”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="m_today">
+        <Property Name="today" Type="int" />
+      </EntityType>
+      生成过程中发现错误:
+      警告 6013: 表/视图“FlowerNutrition.dbo.m_yesterday”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="m_yesterday">
+        <Property Name="yesterday" Type="int" />
+      </EntityType>
+      生成过程中发现错误:
+      警告 6013: 表/视图“FlowerNutrition.dbo.v_tdby”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="v_tdby">
+        <Property Name="tdby" Type="int" />
+      </EntityType>
+      生成过程中发现错误:
+      警告 6013: 表/视图“FlowerNutrition.dbo.v_today”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="v_today">
+        <Property Name="today" Type="int" />
+      </EntityType>
+      生成过程中发现错误:
+      警告 6013: 表/视图“FlowerNutrition.dbo.v_yesterday”未定义主键，并且无法推断有效的主键。已排除了此表/视图。若要使用实体，将需要检查您的架构、添加正确的键并取消对实体的注释。
+      
+      <EntityType Name="v_yesterday">
+        <Property Name="yesterday" Type="int" />
+      </EntityType>-->
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FlowerNutritionModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="FlowerNutritionEntities1" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Auto" EntityType="FlowerNutritionModel.Auto" />
+          <EntitySet Name="Consume" EntityType="FlowerNutritionModel.Consume" />
+          <EntitySet Name="Department" EntityType="FlowerNutritionModel.Department" />
+          <EntitySet Name="Food" EntityType="FlowerNutritionModel.Food" />
+          <EntitySet Name="FoodType" EntityType="FlowerNutritionModel.FoodType" />
+          <EntitySet Name="Forget" EntityType="FlowerNutritionModel.Forget" />
+          <EntitySet Name="Meal" EntityType="FlowerNutritionModel.Meal" />
+          <EntitySet Name="MealFood" EntityType="FlowerNutritionModel.MealFood" />
+          <EntitySet Name="Member" EntityType="FlowerNutritionModel.Member" />
+          <EntitySet Name="Record" EntityType="FlowerNutritionModel.Record" />
+          <EntitySet Name="Shop" EntityType="FlowerNutritionModel.Shop" />
+          <EntitySet Name="Shop_Staff" EntityType="FlowerNutritionModel.Shop_Staff" />
+          <EntitySet Name="Staff" EntityType="FlowerNutritionModel.Staff" />
+          <EntitySet Name="User" EntityType="FlowerNutritionModel.User" />
+          <EntitySet Name="Vip" EntityType="FlowerNutritionModel.Vip" />
+          <EntitySet Name="staffdetail" EntityType="FlowerNutritionModel.staffdetail" />
+          <EntitySet Name="v_Staff" EntityType="FlowerNutritionModel.v_Staff" />
+          <AssociationSet Name="FK_Auto_Shop" Association="FlowerNutritionModel.FK_Auto_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Auto" EntitySet="Auto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Consume_Shop" Association="FlowerNutritionModel.FK_Consume_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Consume" EntitySet="Consume" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Department" Association="FlowerNutritionModel.FK_Staff_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Shop" Association="FlowerNutritionModel.FK_Staff_Shop">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Food_FoodType" Association="FlowerNutritionModel.FK_Food_FoodType">
+            <End Role="FoodType" EntitySet="FoodType" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Food_Shop" Association="FlowerNutritionModel.FK_Food_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Food" EntitySet="Food" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Meal_Food_Food" Association="FlowerNutritionModel.FK_Meal_Food_Food">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="MealFood" EntitySet="MealFood" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Food" Association="FlowerNutritionModel.FK_Record_Food">
+            <End Role="Food" EntitySet="Food" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Forget_Shop" Association="FlowerNutritionModel.FK_Forget_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Forget" EntitySet="Forget" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Shop" Association="FlowerNutritionModel.FK_Member_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Staff" Association="FlowerNutritionModel.FK_Member_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Member_Vip" Association="FlowerNutritionModel.FK_Member_Vip">
+            <End Role="Vip" EntitySet="Vip" />
+            <End Role="Member" EntitySet="Member" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Consume" Association="FlowerNutritionModel.FK_Record_Consume">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Record_Shop" Association="FlowerNutritionModel.FK_Record_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Record" EntitySet="Record" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Shop1" Association="FlowerNutritionModel.FK_Staff_Shop1">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Shop" Association="FlowerNutritionModel.FK_User_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Auto">
+          <Key>
+            <PropertyRef Name="Auto_id" />
+          </Key>
+          <Property Name="Auto_id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Auto_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Shop_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Auto_Shop" FromRole="Auto" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Consume">
+          <Key>
+            <PropertyRef Name="Cus_id" />
+          </Key>
+          <Property Name="Cus_id" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="Cus_detail" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Cus_money" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Ifvip" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Cus_want" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="Cus_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Cus_way" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Card_id" Type="Int64" />
+          <Property Name="shop_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Consume_Shop" FromRole="Consume" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Department_id" />
+          </Key>
+          <Property Name="Department_id" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Department_name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Department_txt" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Staff" Relationship="FlowerNutritionModel.FK_Staff_Department" FromRole="Department" ToRole="Staff" />
+          <NavigationProperty Name="Staff1" Relationship="FlowerNutritionModel.FK_Staff_Shop" FromRole="Department" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Food">
+          <Key>
+            <PropertyRef Name="Food_id" />
+          </Key>
+          <Property Name="Food_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Food_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Food_sale" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Food_ka" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Food_area" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Food_txt" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="shop_id" Type="Int32" />
+          <Property Name="FoodType_id" Type="Int32" />
+          <Property Name="Food_pic" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="FoodType" Relationship="FlowerNutritionModel.FK_Food_FoodType" FromRole="Food" ToRole="FoodType" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Food_Shop" FromRole="Food" ToRole="Shop" />
+          <NavigationProperty Name="MealFood" Relationship="FlowerNutritionModel.FK_Meal_Food_Food" FromRole="Food" ToRole="MealFood" />
+          <NavigationProperty Name="Record" Relationship="FlowerNutritionModel.FK_Record_Food" FromRole="Food" ToRole="Record" />
+        </EntityType>
+        <EntityType Name="FoodType">
+          <Key>
+            <PropertyRef Name="FoodType_id" />
+          </Key>
+          <Property Name="FoodType_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="FoodType_name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Food" Relationship="FlowerNutritionModel.FK_Food_FoodType" FromRole="FoodType" ToRole="Food" />
+        </EntityType>
+        <EntityType Name="Forget">
+          <Key>
+            <PropertyRef Name="Forget_id" />
+          </Key>
+          <Property Name="Forget_id" Type="Int32" Nullable="false" />
+          <Property Name="Forget_txt" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="shop_id" Type="Int32" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Forget_Shop" FromRole="Forget" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="meal_id" />
+            <PropertyRef Name="meal_name" />
+          </Key>
+          <Property Name="meal_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="meal_name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="meal_price" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="MealFood">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="food_id" Type="Int32" />
+          <Property Name="meal_id" Type="Int32" />
+          <NavigationProperty Name="Food" Relationship="FlowerNutritionModel.FK_Meal_Food_Food" FromRole="MealFood" ToRole="Food" />
+        </EntityType>
+        <EntityType Name="Member">
+          <Key>
+            <PropertyRef Name="Card_id" />
+          </Key>
+          <Property Name="Card_id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Card_name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Card_bir" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Cus_height" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Cus_weight" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="BFR" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="Card_balance" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Card_integral" Type="Int64" />
+          <Property Name="Card_pic" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="vip_id" Type="Int32" Nullable="false" />
+          <Property Name="Card_begin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Card_end" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Card_sex" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="Id_card" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Card_number" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Card_state" Type="String" Nullable="false" MaxLength="2" Unicode="true" FixedLength="true" />
+          <Property Name="staff_id" Type="Int32" />
+          <Property Name="shop_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Member_Shop" FromRole="Member" ToRole="Shop" />
+          <NavigationProperty Name="Staff" Relationship="FlowerNutritionModel.FK_Member_Staff" FromRole="Member" ToRole="Staff" />
+          <NavigationProperty Name="Vip" Relationship="FlowerNutritionModel.FK_Member_Vip" FromRole="Member" ToRole="Vip" />
+        </EntityType>
+        <EntityType Name="Record">
+          <Key>
+            <PropertyRef Name="Record_id" />
+          </Key>
+          <Property Name="Record_id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Cus_id" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Card_id" Type="Int64" />
+          <Property Name="shop_id" Type="Int32" Nullable="false" />
+          <Property Name="food_id" Type="Int32" />
+          <NavigationProperty Name="Food" Relationship="FlowerNutritionModel.FK_Record_Food" FromRole="Record" ToRole="Food" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Record_Consume" FromRole="Record" ToRole="Shop" />
+          <NavigationProperty Name="Shop1" Relationship="FlowerNutritionModel.FK_Record_Shop" FromRole="Record" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Shop_id" />
+          </Key>
+          <Property Name="Shop_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Shop_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_begin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Shop_address" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_city" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_province" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_person" Type="Int64" />
+          <Property Name="Shop_money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Shop_number" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_pay" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="Shop_state" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_end" Type="DateTime" Precision="0" />
+          <Property Name="Shop_pic" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_txt" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="Staff_id" Type="Int32" />
+          <NavigationProperty Name="Auto" Relationship="FlowerNutritionModel.FK_Auto_Shop" FromRole="Shop" ToRole="Auto" />
+          <NavigationProperty Name="Consume" Relationship="FlowerNutritionModel.FK_Consume_Shop" FromRole="Shop" ToRole="Consume" />
+          <NavigationProperty Name="Food" Relationship="FlowerNutritionModel.FK_Food_Shop" FromRole="Shop" ToRole="Food" />
+          <NavigationProperty Name="Forget" Relationship="FlowerNutritionModel.FK_Forget_Shop" FromRole="Shop" ToRole="Forget" />
+          <NavigationProperty Name="Member" Relationship="FlowerNutritionModel.FK_Member_Shop" FromRole="Shop" ToRole="Member" />
+          <NavigationProperty Name="Record" Relationship="FlowerNutritionModel.FK_Record_Consume" FromRole="Shop" ToRole="Record" />
+          <NavigationProperty Name="Record1" Relationship="FlowerNutritionModel.FK_Record_Shop" FromRole="Shop" ToRole="Record" />
+          <NavigationProperty Name="Staff" Relationship="FlowerNutritionModel.FK_Staff_Shop1" FromRole="Shop" ToRole="Staff" />
+          <NavigationProperty Name="User" Relationship="FlowerNutritionModel.FK_User_Shop" FromRole="Shop" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Shop_Staff">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="staff_id" />
+            <PropertyRef Name="shop_id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="staff_id" Type="Int32" Nullable="false" />
+          <Property Name="shop_id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+          </Key>
+          <Property Name="staff_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="staff_name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="staff_bir" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_sex" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="true" />
+          <Property Name="staff_city" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="staff_address" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="staff_idcard" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="staff_number" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Department_id" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="shop_id" Type="Int32" Nullable="false" />
+          <Property Name="staff_score" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="staff_salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="staff_begin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_state" Type="String" MaxLength="2" Unicode="true" FixedLength="true" />
+          <Property Name="staff_txt" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="staff_pic" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Department" Relationship="FlowerNutritionModel.FK_Staff_Department" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="Department1" Relationship="FlowerNutritionModel.FK_Staff_Shop" FromRole="Staff" ToRole="Department" />
+          <NavigationProperty Name="Member" Relationship="FlowerNutritionModel.FK_Member_Staff" FromRole="Staff" ToRole="Member" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_Staff_Shop1" FromRole="Staff" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="User_id" />
+          </Key>
+          <Property Name="User_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="User_admin" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="User_pwd" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_id" Type="Int32" />
+          <NavigationProperty Name="Shop" Relationship="FlowerNutritionModel.FK_User_Shop" FromRole="User" ToRole="Shop" />
+        </EntityType>
+        <EntityType Name="Vip">
+          <Key>
+            <PropertyRef Name="vip_id" />
+          </Key>
+          <Property Name="vip_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="vip_name" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="vip_discount" Type="Decimal" Nullable="false" Precision="3" Scale="2" />
+          <NavigationProperty Name="Member" Relationship="FlowerNutritionModel.FK_Member_Vip" FromRole="Vip" ToRole="Member" />
+        </EntityType>
+        <EntityType Name="staffdetail">
+          <Key>
+            <PropertyRef Name="staff_id" />
+            <PropertyRef Name="staff_name" />
+            <PropertyRef Name="staff_bir" />
+            <PropertyRef Name="staff_sex" />
+            <PropertyRef Name="staff_city" />
+            <PropertyRef Name="staff_address" />
+            <PropertyRef Name="staff_idcard" />
+            <PropertyRef Name="staff_number" />
+            <PropertyRef Name="Department_name" />
+            <PropertyRef Name="Shop_name" />
+            <PropertyRef Name="staff_score" />
+            <PropertyRef Name="staff_begin" />
+          </Key>
+          <Property Name="staff_id" Type="Int32" Nullable="false" />
+          <Property Name="staff_name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="staff_bir" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_sex" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="true" />
+          <Property Name="staff_city" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="staff_address" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="staff_idcard" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_city" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="staff_number" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Department_name" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Shop_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="staff_score" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="staff_salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="staff_begin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_state" Type="String" MaxLength="2" Unicode="true" FixedLength="true" />
+          <Property Name="staff_txt" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="staff_pic" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="v_Staff">
+          <Key>
+            <PropertyRef Name="staff_id" />
+            <PropertyRef Name="staff_name" />
+            <PropertyRef Name="staff_bir" />
+            <PropertyRef Name="staff_sex" />
+            <PropertyRef Name="staff_city" />
+            <PropertyRef Name="staff_address" />
+            <PropertyRef Name="staff_idcard" />
+            <PropertyRef Name="staff_number" />
+            <PropertyRef Name="shop_id" />
+            <PropertyRef Name="staff_score" />
+            <PropertyRef Name="staff_begin" />
+          </Key>
+          <Property Name="num" Type="Int64" />
+          <Property Name="staff_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="staff_name" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="staff_bir" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_sex" Type="String" Nullable="false" MaxLength="1" Unicode="true" FixedLength="true" />
+          <Property Name="staff_city" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="staff_address" Type="String" Nullable="false" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="staff_idcard" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="staff_number" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="Department_id" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <Property Name="shop_id" Type="Int32" Nullable="false" />
+          <Property Name="staff_score" Type="Decimal" Nullable="false" Precision="12" Scale="2" />
+          <Property Name="staff_salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="staff_begin" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="staff_state" Type="String" MaxLength="2" Unicode="true" FixedLength="true" />
+          <Property Name="staff_txt" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="staff_pic" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="shop_name" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="department_name" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_Auto_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="1" />
+          <End Role="Auto" Type="FlowerNutritionModel.Auto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Auto">
+              <PropertyRef Name="Shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Consume_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="1" />
+          <End Role="Consume" Type="FlowerNutritionModel.Consume" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Consume">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Department">
+          <End Role="Department" Type="FlowerNutritionModel.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="FlowerNutritionModel.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="Department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Shop">
+          <End Role="Department" Type="FlowerNutritionModel.Department" Multiplicity="0..1" />
+          <End Role="Staff" Type="FlowerNutritionModel.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="Department_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="Department_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Food_FoodType">
+          <End Role="FoodType" Type="FlowerNutritionModel.FoodType" Multiplicity="0..1" />
+          <End Role="Food" Type="FlowerNutritionModel.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodType">
+              <PropertyRef Name="FoodType_id" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="FoodType_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Food_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="0..1" />
+          <End Role="Food" Type="FlowerNutritionModel.Food" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Food">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Meal_Food_Food">
+          <End Role="Food" Type="FlowerNutritionModel.Food" Multiplicity="0..1" />
+          <End Role="MealFood" Type="FlowerNutritionModel.MealFood" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Food_id" />
+            </Principal>
+            <Dependent Role="MealFood">
+              <PropertyRef Name="food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Food">
+          <End Role="Food" Type="FlowerNutritionModel.Food" Multiplicity="0..1" />
+          <End Role="Record" Type="FlowerNutritionModel.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Food">
+              <PropertyRef Name="Food_id" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="food_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Forget_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="0..1" />
+          <End Role="Forget" Type="FlowerNutritionModel.Forget" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Forget">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="1" />
+          <End Role="Member" Type="FlowerNutritionModel.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Staff">
+          <End Role="Staff" Type="FlowerNutritionModel.Staff" Multiplicity="0..1" />
+          <End Role="Member" Type="FlowerNutritionModel.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="staff_id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="staff_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_Vip">
+          <End Role="Vip" Type="FlowerNutritionModel.Vip" Multiplicity="1" />
+          <End Role="Member" Type="FlowerNutritionModel.Member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vip">
+              <PropertyRef Name="vip_id" />
+            </Principal>
+            <Dependent Role="Member">
+              <PropertyRef Name="vip_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Consume">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="1" />
+          <End Role="Record" Type="FlowerNutritionModel.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Record_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="1" />
+          <End Role="Record" Type="FlowerNutritionModel.Record" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Record">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Shop1">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="1" />
+          <End Role="Staff" Type="FlowerNutritionModel.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Shop">
+          <End Role="Shop" Type="FlowerNutritionModel.Shop" Multiplicity="0..1" />
+          <End Role="User" Type="FlowerNutritionModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Shop_id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Shop_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FlowerNutritionModelStoreContainer" CdmEntityContainer="FlowerNutritionEntities1">
+          <EntitySetMapping Name="Auto">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Auto">
+              <MappingFragment StoreEntitySet="Auto">
+                <ScalarProperty Name="Auto_id" ColumnName="Auto_id" />
+                <ScalarProperty Name="Auto_date" ColumnName="Auto_date" />
+                <ScalarProperty Name="Shop_id" ColumnName="Shop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consume">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Consume">
+              <MappingFragment StoreEntitySet="Consume">
+                <ScalarProperty Name="Cus_id" ColumnName="Cus_id" />
+                <ScalarProperty Name="Cus_detail" ColumnName="Cus_detail" />
+                <ScalarProperty Name="Cus_money" ColumnName="Cus_money" />
+                <ScalarProperty Name="Ifvip" ColumnName="Ifvip" />
+                <ScalarProperty Name="Cus_want" ColumnName="Cus_want" />
+                <ScalarProperty Name="Cus_time" ColumnName="Cus_time" />
+                <ScalarProperty Name="Cus_way" ColumnName="Cus_way" />
+                <ScalarProperty Name="Card_id" ColumnName="Card_id" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="Department_id" ColumnName="Department_id" />
+                <ScalarProperty Name="Department_name" ColumnName="Department_name" />
+                <ScalarProperty Name="Department_txt" ColumnName="Department_txt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Food">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Food">
+              <MappingFragment StoreEntitySet="Food">
+                <ScalarProperty Name="Food_id" ColumnName="Food_id" />
+                <ScalarProperty Name="Food_name" ColumnName="Food_name" />
+                <ScalarProperty Name="Food_sale" ColumnName="Food_sale" />
+                <ScalarProperty Name="Food_ka" ColumnName="Food_ka" />
+                <ScalarProperty Name="Food_area" ColumnName="Food_area" />
+                <ScalarProperty Name="Food_txt" ColumnName="Food_txt" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+                <ScalarProperty Name="FoodType_id" ColumnName="FoodType_id" />
+                <ScalarProperty Name="Food_pic" ColumnName="Food_pic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodType">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.FoodType">
+              <MappingFragment StoreEntitySet="FoodType">
+                <ScalarProperty Name="FoodType_id" ColumnName="FoodType_id" />
+                <ScalarProperty Name="FoodType_name" ColumnName="FoodType_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Forget">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Forget">
+              <MappingFragment StoreEntitySet="Forget">
+                <ScalarProperty Name="Forget_id" ColumnName="Forget_id" />
+                <ScalarProperty Name="Forget_txt" ColumnName="Forget_txt" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meal">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Meal">
+              <MappingFragment StoreEntitySet="Meal">
+                <ScalarProperty Name="meal_id" ColumnName="meal_id" />
+                <ScalarProperty Name="meal_name" ColumnName="meal_name" />
+                <ScalarProperty Name="meal_price" ColumnName="meal_price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MealFood">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.MealFood">
+              <MappingFragment StoreEntitySet="MealFood">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="food_id" ColumnName="food_id" />
+                <ScalarProperty Name="meal_id" ColumnName="meal_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Member">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Member">
+              <MappingFragment StoreEntitySet="Member">
+                <ScalarProperty Name="Card_id" ColumnName="Card_id" />
+                <ScalarProperty Name="Card_name" ColumnName="Card_name" />
+                <ScalarProperty Name="Card_bir" ColumnName="Card_bir" />
+                <ScalarProperty Name="Cus_height" ColumnName="Cus_height" />
+                <ScalarProperty Name="Cus_weight" ColumnName="Cus_weight" />
+                <ScalarProperty Name="BFR" ColumnName="BFR" />
+                <ScalarProperty Name="Card_balance" ColumnName="Card_balance" />
+                <ScalarProperty Name="Card_integral" ColumnName="Card_integral" />
+                <ScalarProperty Name="Card_pic" ColumnName="Card_pic" />
+                <ScalarProperty Name="vip_id" ColumnName="vip_id" />
+                <ScalarProperty Name="Card_begin" ColumnName="Card_begin" />
+                <ScalarProperty Name="Card_end" ColumnName="Card_end" />
+                <ScalarProperty Name="Card_sex" ColumnName="Card_sex" />
+                <ScalarProperty Name="Id_card" ColumnName="Id_card" />
+                <ScalarProperty Name="Card_number" ColumnName="Card_number" />
+                <ScalarProperty Name="Card_state" ColumnName="Card_state" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Record">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Record">
+              <MappingFragment StoreEntitySet="Record">
+                <ScalarProperty Name="Record_id" ColumnName="Record_id" />
+                <ScalarProperty Name="Cus_id" ColumnName="Cus_id" />
+                <ScalarProperty Name="Card_id" ColumnName="Card_id" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+                <ScalarProperty Name="food_id" ColumnName="food_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shop">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Shop">
+              <MappingFragment StoreEntitySet="Shop">
+                <ScalarProperty Name="Shop_id" ColumnName="Shop_id" />
+                <ScalarProperty Name="Shop_name" ColumnName="Shop_name" />
+                <ScalarProperty Name="Shop_begin" ColumnName="Shop_begin" />
+                <ScalarProperty Name="Shop_address" ColumnName="Shop_address" />
+                <ScalarProperty Name="Shop_city" ColumnName="Shop_city" />
+                <ScalarProperty Name="Shop_province" ColumnName="Shop_province" />
+                <ScalarProperty Name="Shop_person" ColumnName="Shop_person" />
+                <ScalarProperty Name="Shop_money" ColumnName="Shop_money" />
+                <ScalarProperty Name="Shop_number" ColumnName="Shop_number" />
+                <ScalarProperty Name="Shop_pay" ColumnName="Shop_pay" />
+                <ScalarProperty Name="Shop_state" ColumnName="Shop_state" />
+                <ScalarProperty Name="Shop_end" ColumnName="Shop_end" />
+                <ScalarProperty Name="Shop_pic" ColumnName="Shop_pic" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Shop_txt" ColumnName="Shop_txt" />
+                <ScalarProperty Name="Staff_id" ColumnName="Staff_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shop_Staff">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Shop_Staff">
+              <MappingFragment StoreEntitySet="Shop_Staff">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="staff_name" ColumnName="staff_name" />
+                <ScalarProperty Name="staff_bir" ColumnName="staff_bir" />
+                <ScalarProperty Name="staff_sex" ColumnName="staff_sex" />
+                <ScalarProperty Name="staff_city" ColumnName="staff_city" />
+                <ScalarProperty Name="staff_address" ColumnName="staff_address" />
+                <ScalarProperty Name="staff_idcard" ColumnName="staff_idcard" />
+                <ScalarProperty Name="staff_number" ColumnName="staff_number" />
+                <ScalarProperty Name="Department_id" ColumnName="Department_id" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+                <ScalarProperty Name="staff_score" ColumnName="staff_score" />
+                <ScalarProperty Name="staff_salary" ColumnName="staff_salary" />
+                <ScalarProperty Name="staff_begin" ColumnName="staff_begin" />
+                <ScalarProperty Name="staff_state" ColumnName="staff_state" />
+                <ScalarProperty Name="staff_txt" ColumnName="staff_txt" />
+                <ScalarProperty Name="staff_pic" ColumnName="staff_pic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="User_id" ColumnName="User_id" />
+                <ScalarProperty Name="User_admin" ColumnName="User_admin" />
+                <ScalarProperty Name="User_pwd" ColumnName="User_pwd" />
+                <ScalarProperty Name="Shop_id" ColumnName="Shop_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vip">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.Vip">
+              <MappingFragment StoreEntitySet="Vip">
+                <ScalarProperty Name="vip_id" ColumnName="vip_id" />
+                <ScalarProperty Name="vip_name" ColumnName="vip_name" />
+                <ScalarProperty Name="vip_discount" ColumnName="vip_discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="staffdetail">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.staffdetail">
+              <MappingFragment StoreEntitySet="staffdetail">
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="staff_name" ColumnName="staff_name" />
+                <ScalarProperty Name="staff_bir" ColumnName="staff_bir" />
+                <ScalarProperty Name="staff_sex" ColumnName="staff_sex" />
+                <ScalarProperty Name="staff_city" ColumnName="staff_city" />
+                <ScalarProperty Name="staff_address" ColumnName="staff_address" />
+                <ScalarProperty Name="staff_idcard" ColumnName="staff_idcard" />
+                <ScalarProperty Name="Shop_city" ColumnName="Shop_city" />
+                <ScalarProperty Name="staff_number" ColumnName="staff_number" />
+                <ScalarProperty Name="Department_name" ColumnName="Department_name" />
+                <ScalarProperty Name="Shop_name" ColumnName="Shop_name" />
+                <ScalarProperty Name="staff_score" ColumnName="staff_score" />
+                <ScalarProperty Name="staff_salary" ColumnName="staff_salary" />
+                <ScalarProperty Name="staff_begin" ColumnName="staff_begin" />
+                <ScalarProperty Name="staff_state" ColumnName="staff_state" />
+                <ScalarProperty Name="staff_txt" ColumnName="staff_txt" />
+                <ScalarProperty Name="staff_pic" ColumnName="staff_pic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="v_Staff">
+            <EntityTypeMapping TypeName="FlowerNutritionModel.v_Staff">
+              <MappingFragment StoreEntitySet="v_Staff">
+                <ScalarProperty Name="num" ColumnName="num" />
+                <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+                <ScalarProperty Name="staff_name" ColumnName="staff_name" />
+                <ScalarProperty Name="staff_bir" ColumnName="staff_bir" />
+                <ScalarProperty Name="staff_sex" ColumnName="staff_sex" />
+                <ScalarProperty Name="staff_city" ColumnName="staff_city" />
+                <ScalarProperty Name="staff_address" ColumnName="staff_address" />
+                <ScalarProperty Name="staff_idcard" ColumnName="staff_idcard" />
+                <ScalarProperty Name="staff_number" ColumnName="staff_number" />
+                <ScalarProperty Name="Department_id" ColumnName="Department_id" />
+                <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+                <ScalarProperty Name="staff_score" ColumnName="staff_score" />
+                <ScalarProperty Name="staff_salary" ColumnName="staff_salary" />
+                <ScalarProperty Name="staff_begin" ColumnName="staff_begin" />
+                <ScalarProperty Name="staff_state" ColumnName="staff_state" />
+                <ScalarProperty Name="staff_txt" ColumnName="staff_txt" />
+                <ScalarProperty Name="staff_pic" ColumnName="staff_pic" />
+                <ScalarProperty Name="shop_name" ColumnName="shop_name" />
+                <ScalarProperty Name="department_name" ColumnName="department_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

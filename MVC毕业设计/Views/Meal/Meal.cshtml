@@ -1,0 +1,356 @@
+﻿@{
+    ViewBag.Title = "Meal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/auto.css" rel="stylesheet" />
+<link href="~/Content/vendor/bootstrap/css/bootstrap-table.css" rel="stylesheet" />
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<link href="~/Content/css/demo.css" rel="stylesheet" />
+<link href="~/Content/css/component.css" rel="stylesheet" />
+
+<script src="~/Content/vendor/bootstrap/js/bootstrap-table.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/js/my_scrollbar.js"></script>
+
+<style type="text/css">
+    * {
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .mask {
+        position: absolute;
+        top: 0px;
+        filter: alpha(opacity=60);
+        background-color: #777;
+        z-index: 1002;
+        left: 0px;
+        opacity: 0.5;
+        -moz-opacity: 0.5;
+    }
+
+    .foodType_name {
+        height: 25px;
+        line-height: 25px;
+        background-color: #7ef7a2;
+        color: white;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        margin: 2px 5px;
+    }
+
+    .font {
+        background-color: white;
+        font-weight: 900;
+        height: 30px;
+        line-height: 30px;
+        font-size: 1.2vw;
+    }
+    
+    
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw; font-family: 微软雅黑;">套餐管理</h1>
+        </div>
+    </div>
+
+    @*主体内容*@
+    <div class="row">
+        <div class="col-lg-3">
+            <label style="color: red; font-size: 0.7vw">创建套餐</label>
+            <table id="table"></table>
+        </div>
+        <div class="col-lg-9" style="text-align: center">
+            <label style="color: black; font-size: 1vw; font-family: 黑体">菜单类别</label>
+            <div class="col-lg-12 meallist" style="height: 120px; overflow-y: auto; padding-top: 5px">
+                @foreach (System.Data.DataRow s in Model.Rows)
+                {
+                    <div class="col-lg-2 foodType_name">@s["FoodType_name"]
+                        <span style="float: right; height: 25px;" class="remove"><i class="glyphicon glyphicon-remove"></i></span>
+                    </div>
+                }
+                <nav class="col-lg-2 addlist" style="height: 25px; line-height: 25px; background-color: #3b7fba; color: white; font-size: 0.8vw; font-weight: 600; cursor: pointer; margin: 2px 5px">
+                    添加类别
+                </nav>
+            </div>
+
+            @*自定义套餐*@
+            <div class="col-lg-12" style="text-align: center; background-color: #f9f7f6">
+                <label style="color: black; font-size: 1.5vw; font-family: 黑体">自建套餐</label>
+                <div class="col-lg-12">
+                    @*套餐名*@
+                    <span class="input input--hideo">
+                        <input class="input__field input__field--hideo" type="text" id="mealname" placeholder="请输入名称" style="color: black; font-size: 0.9vw;" />
+                        <label class="input__label input__label--hideo" for="input-41">
+                            <i class="glyphicon glyphicon-cutlery icon icon--hideo" style="font-size: 1.2vw"></i>
+                            <span class="input__label-content input__label-content--hideo">套餐名</span>
+                        </label>
+                    </span>
+                    @*价格*@
+                    <span class="input input--hideo">
+                        <input class="input__field input__field--hideo" type="text" id="mealprice" placeholder="请输入价格" style="color: black; font-size: 0.9vw;" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" />
+                        <label class="input__label input__label--hideo" for="input-41">
+                            <i class="fa fa-rmb icon icon--hideo" style="font-size: 1.5vw"></i>
+                            <span class="input__label-content input__label-content--hideo">套餐名</span>
+                        </label>
+                    </span>
+                    @*创建按钮*@
+                    <span class="input input--hideo" style="background-color:#7ef7a2">
+                        <button type="button" id="createBtn" style="width:30%;height:25px;font-size:1vw;border:none;background-color:#899dda;color:white">
+                            创建此套餐
+                        </button>
+                    </span>
+                    
+
+                    <div class="col-lg-12">
+                        <div class="col-lg-12" style="background-color: #899dda;">
+                            <label style="font-size: 1.0vw; color: white">已选菜单</label>
+                        </div>
+                        <div class="col-lg-12" style="margin-top: 1%" id="foodpanel">
+                            <div style="font-size: 2.5vw">无内容</div>
+                        </div>
+                        @*清空选项*@
+                        <div class="col-lg-12" style="margin-top: 2%">
+                            <span style="background-color: #899dda; padding: 2px 13px; cursor: pointer; font-size: 0.7vw; color: white;" id="qingkong">清空</span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    @*添加菜单类别*@
+    <div style="width: 50%; height: 300px; position: absolute; left: 25%; top: 15%; z-index: 9999; text-align: center; display: none" id="addpanel">
+        <section class="content bgcolor-8">
+            <h2>添加菜品类型</h2>
+            <span class="input input--isao">
+                <input class="input__field input__field--isao" type="text" id="foodtype_name" />
+                <label class="input__label input__label--isao" for="input-38" data-content="名称">
+                    <span class="input__label-content input__label-content--isao">名称</span>
+                </label>
+            </span>
+            <p>
+                <button type="button" id="addbtn" style="border: none; background-color: #dadada; width: 130px; height: 30px; color: #3d4444; font-size: 1vw;">确认</button>
+                <button type="button" id="canel" style="border: none; background-color: #dadada; width: 130px; height: 30px; color: #3d4444; font-size: 1vw; margin-left: 1%">取消</button>
+            </p>
+        </section>
+    </div>
+</div>
+<div id="mask" class="mask">
+</div>
+<script>
+    var foodname;
+    var count;
+    $(function () {
+        cha();
+    })
+
+    //显示菜系
+    function cha() {
+        $("#table").bootstrapTable({
+            method: "post",
+            url: "/Meal/Showmeal",
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: true,                     //是否启用排序
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+            strictSearch: true,                 //斑马纹
+            clickToSelect: true,                //是否启用点击选中行
+            pagination: true,                   //分页工具栏
+            singleSelect: true,
+            queryParams: function (params) {
+                return {
+                    //type: $("#selected").val(),
+                    //name: $("#txt").val(),
+                    offset: this.pageNumber,
+                    limit: this.pageSize
+                }
+            },
+            columns: [{
+                field: "Food_pic",
+                title: '头像',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return "<img class='img-circle' style='height:35px' src='/Content/images/" + row.Food_pic + "' />";
+                }
+            }, {
+                field: 'Food_id',
+                title: '菜单编号',
+                align: 'center',
+                width: 10
+            }, {
+                field: 'Food_name',
+                title: '菜单名称',
+                align: 'center'
+            }, {
+                field: "Food_id",
+                title: '操作',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return "<a href='javascript:;' class='btn btn-xs bg-info' title='查看'  style='margin-right:3px' onclick='clickf(" + row.Food_id + ")'><span class='glyphicon glyphicon-plus' ></span></a>";
+                }
+            }]
+        });
+    }
+    //添加菜单
+    function clickf(index) {
+        count = 0;
+        //如果里面没有内容的话
+        if ($("#foodpanel").find("div").text() == "无内容") {
+            $("#foodpanel").empty();
+        }
+        //循环。7-3号完成的内容。晚安
+        for (var i = 0; i < $("#foodpanel").find("div").length; i++) {
+            if (index == $("#foodpanel").find("div").eq(i).text()) {
+                count++;
+                break;
+            }
+        }
+        if (count == 0) {
+            $("#foodpanel").append("<div class='col-lg-1 img-circle font'>" + index + "</div>");
+        } else {
+            zeroModal.alert('请勿重复添加!');        }
+    }
+
+    //清空按钮
+    $("#qingkong").click(function () {
+        zeroModal.confirm('确认清空吗？', function () {
+            $("#foodpanel").empty();
+            $("#foodpanel").append("<div style='font-size:2.5vw'>无内容</div>");
+        })
+    })
+
+    //简单特效
+    $(".meallist div").hover(
+        function () {
+            $(this).css({ "background-color": "white", "color": "#7ef7a2" })
+        }, function () {
+            $(this).css({ "background-color": "#7ef7a2", "color": "white" })
+        })
+
+    //增加类别按钮
+    $(".addlist").click(function () {
+        $("#mask").css("height", $(document).height());
+        $("#mask").css("width", $(document).width());
+        $("#mask").show();
+        $("#addpanel").css("display", "block");
+    })
+
+    //取消按钮
+    $("#canel").click(function () {
+        $("#mask").hide();
+        $("#addpanel").css("display", "none");
+    })
+
+    //增加菜单成功
+    $("#addbtn").click(function () {
+        $.ajax({
+            type: 'POST',
+            dataType: 'text',
+            url: "/Meal/addname",
+            data: $.param({ 'foodname': $("#foodtype_name").val() }),
+            success: function (data) {
+                if (data == "成功") {
+                    $("#mask").hide();
+                    $("#addpanel").css("display", "none");
+                    $("#foodtype_name").val("");
+                    reshow();
+                } else {
+                    zeroModal.alert('添加失败');
+                }
+            }
+        })
+    })
+
+    //移除菜单项
+    $(".remove").click(function () {
+        foodname = $.trim($(this).parent().text());
+        removelist();
+
+    })
+
+    //显示类别
+    function reshow() {
+        //清空原来的内容
+        $(".meallist div").remove();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/Meal/showfoodtype",
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    $(".addlist").before("<div class='col-lg-2 foodType_name'>" + item.FoodType_name + "<span style='float:right;height:25px;' class='remove' onclick='remove(this)'><i class='glyphicon glyphicon-remove'></i></span></div>")
+                });
+            }
+        });
+    }
+
+    function remove(aa) {
+        foodname = $.trim($(aa).parent().text())
+        removelist();
+    }
+
+    //删除方法
+    function removelist() {
+        zeroModal.confirm('确认删除吗？', function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'text',
+                url: "/Meal/removename",
+                data: $.param({ 'foodname2': foodname }),
+                success: function (data) {
+                    if (data == "成功") {
+                        reshow();
+                    } else {
+                        zeroModal.alert('无法删除');
+                    }
+                }
+            })
+        })
+    }
+
+    //创建按钮
+    $("#createBtn").click(function () {
+        var foods = '';
+        //将已选菜单拼接
+        for (var i = 0; i < $("#foodpanel").find("div").length; i++) {
+            if (i == $("#foodpanel").find("div").length - 1) {
+                foods += $("#foodpanel").find("div").eq(i).text();
+            } else {
+                foods += $("#foodpanel").find("div").eq(i).text() + ",";
+            }
+        }
+        if ($("#mealname").val() == "" || $("#mealprice").val() == "" || $("#foodpanel").find("div").text() == "无内容") {
+            zeroModal.alert('请补充完整数据!');
+        } else {
+            zeroModal.confirm('确认添加"' + $("#mealname").val() + '"吗？', function () {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    url: "/Meal/MealAdd",
+                    data: $.param({ 'mealname': $("#mealname").val(), 'mealprice': $("#mealprice").val(), 'foods': foods }),
+                    success: function (data) {
+                        if (data == "成功") {
+                            zeroModal.alert('添加成功');
+                            $("#mealname").val("");
+                            $("#mealprice").val("");
+                            $("#foodpanel").empty();
+                            $("#foodpanel").append("<div style='font-size:2.5vw'>无内容</div>");
+                        } else {
+                            zeroModal.alert('添加失败');
+                        }
+                    }
+                })
+            })
+            
+        }
+    })
+
+</script>

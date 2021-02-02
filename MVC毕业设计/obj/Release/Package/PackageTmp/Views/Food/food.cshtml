@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "food";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/auto.css" rel="stylesheet" />
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<link href="~/Content/css/demo.css" rel="stylesheet" />
+<link href="~/Content/css/component.css" rel="stylesheet" />
+
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/js/my_scrollbar.js"></script>
+
+<style type="text/css">
+    
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw; font-family: 微软雅黑;">添加菜品</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <form name="form" id="list">
+            <div class="col-lg-9">
+                <section class="content bgcolor-2">
+                    <span class="input input--isao">
+                        <input class="input__field input__field--isao" type="text" name="txtname" />
+                        <label class="input__label input__label--isao" for="input-38" data-content="菜名">
+                            <span class="input__label-content input__label-content--isao" style="color: red">菜名</span>
+                        </label>
+                    </span>
+                    <span class="input input--isao">
+                        <input class="input__field input__field--isao" type="text" name="txtprice" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" />
+                        <label class="input__label input__label--isao" for="input-39" data-content="售价">
+                            <span class="input__label-content input__label-content--isao" style="color: red">售价</span>
+                        </label>
+                    </span>
+                    <span class="input input--isao">
+                        <input class="input__field input__field--isao" type="text" name="txtka" />
+                        <label class="input__label input__label--isao" for="input-40" data-content="卡路里" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')">
+                            <span class="input__label-content input__label-content--isao" style="color: red">卡路里</span>
+                        </label>
+                    </span>
+                    <span class="input input--isao">
+                        <input class="input__field input__field--isao" type="text" name="txtadd" />
+                        <label class="input__label input__label--isao" for="input-40" data-content="生产地">
+                            <span class="input__label-content input__label-content--isao" style="color: red">生产地</span>
+                        </label>
+                    </span>
+                    <span class="input input--isao">
+                        <textarea style="resize: none; font-size: 0.8vw; width: 100%; height: 60px" id="txtarea"></textarea>
+                        <label class="input__label input__label--isao" for="input-40" data-content="商品描述">
+                            <span class="input__label-content input__label-content--isao" style="color: red">商品描述</span>
+                        </label>
+                    </span>
+                    <span class="input input--isao">
+                        <select style="margin: 22px 0px;" id="leibie">
+                            @foreach (System.Data.DataRow s in Model.Rows)
+                            {
+                                <option value="@s["FoodType_id"]">@s["FoodType_name"]</option>
+                            }
+                        </select>
+                        <label class="input__label input__label--isao" for="input-40" data-content="所属类别">
+                            <span class="input__label-content input__label-content--isao" style="color: red">所属类别</span>
+                        </label>
+                    </span>
+                </section>
+            </div>
+        </form>
+
+        @*图片选择*@
+        <div class="col-lg-3" style="text-align: center">
+            <label>添加图片</label>
+            <div id="showpic" style="height: 200px; width: 65%; margin: 0px auto">
+                <img src="/Content/images/null.jpg" style="width: 100%; height: 198px" />
+            </div>
+            <div style="text-align: center; position: relative; margin-top: 20px;" class="col-lg-12">
+                <label style="font-size: 1.1vw; background-color: red; width: 74%; color: white"><span class="glyphicon glyphicon-plus-sign"></span>选择图片</label>
+                <input type="file" id="pic" style="height: 33px; position: absolute; top: 0px; left: 15%; opacity: 0; cursor: pointer" />
+            </div>
+        </div>
+
+        <div class="col-lg-12" style="text-align: center">
+            <button type="button" id="create" style="width: 16%; height: 40px; border: none; background-color: red; color: white; font-size: 1.1vw">确认创建</button>
+        </div>
+    </div>
+
+</div>
+<script>
+    var pics;
+    var count;
+    //图片选择
+    $("#pic").change(function () {
+        var str = $(this).val();
+        $("#showpic").empty();
+        if (str !== "") {
+            var arr = str.split("\\");
+            var file_name = arr[arr.length - 1];
+            pics = file_name;
+            $(this).next("button").text(file_name);
+            $("#showpic").append("<img src='/Content/images/" + file_name + "' style='width:100%;height:198px;' />");
+        }
+    })
+
+    $("#create").click(function () {
+        count = 0;
+        for (var i = 0; i < document.form.elements.length - 1; i++) {
+            if (document.form.elements[i].value == "") {
+                count++;
+            }
+        }
+        if (count == 0) {//数据完整
+            zeroModal.confirm('确认添加吗？', function () {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    url: "/Food/FoodAdd",
+                    data: $.param({ 'pics': pics, 'leibie': $("#leibie").val(), 'txt': $("#txtarea").val() }) + '&' + $('#list').serialize(),
+                    success: function (data) {
+                        if (data == "成功") {
+                            zeroModal.alert('恭喜!添加成功!');
+                            window.location.href = "/Index/Food";
+                        } else {
+                            zeroModal.alert('添加失败!');
+                        }
+                    }
+                });
+            })
+        } else {
+            zeroModal.alert('请填写完整信息!!!');
+        }
+    })
+
+
+</script>

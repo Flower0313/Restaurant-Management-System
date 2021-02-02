@@ -1,0 +1,441 @@
+﻿@{
+    ViewBag.Title = "Employee";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/Content/vendor/bootstrap/css/bootstrap-table.css" rel="stylesheet" />
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+
+<script src="~/Content/vendor/bootstrap/js/datepicker.js"></script>
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap-table.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+
+
+<style type="text/css">
+    html {
+        overflow-y: scroll;
+    }
+    .mask {
+        position: absolute;
+        top: 0px;
+        filter: alpha(opacity=60);
+        background-color: #777;
+        z-index: 1002;
+        left: 0px;
+        opacity: 0.5;
+        -moz-opacity: 0.5;
+    }
+
+    #listpanel a i {
+        margin-right: 8px;
+    }
+
+    #submitbtn {
+        background-color: white;
+        border: 1px solid #555555;
+        color: #555555;
+        width: 20%;
+    }
+
+        #submitbtn:hover {
+            transition: 0.4s;
+            background-color: #555555;
+            color: white;
+        }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw;">会员详情</h1>
+        </div>
+    </div>
+</div>
+
+<div style="" class="row" id="tankuang">
+    <div class="panel panel-green">
+        <div class="panel-heading">
+            数据展示
+        </div>
+        <div class="panel-body" style="position: relative">
+            <div class="input-group custom-search-form" style="width: 35%; position: absolute; top: 18px; left: 20px">
+                <input type="text" class="form-control" placeholder="搜索..." id="searchtxt" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="searchbtn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            
+            <table id="table"></table>
+        </div>
+        <div class="panel-footer">
+            @if (Session["admin"].ToString() != "SuperAdmin")
+            {
+                <button type="button" class="btn btn-outline btn-danger" id="addBtn">添加会员</button>
+            }
+        </div>
+    </div>
+</div>
+
+<div id="mask" class="mask">
+</div>
+<!--添加会员-->
+<div class="container" style="width: 50%; display: none; position: absolute; left: 28%; top: 15%; z-index: 1003;" id="add">
+    <div class="panel panel-green" id="doudou">
+        <div class="panel-heading">
+            添加会员<a style="cursor: pointer; float: right" id="guanbi"><span class='glyphicon glyphicon-remove'></span></a>
+        </div>
+        <div class="panel-body" style="position: relative; background-image: url('/Content/images/right.jpg'); background-repeat: no-repeat; background-position: right">
+            <!--头像信息-->
+            <div class="col-lg-3">
+                <div id="showpic" style="height: 160px; width: 80%; margin: 0px auto;">
+                    <img src="/Content/images/null.jpg" style="width: 100%; height: 198px" />
+                </div>
+                <div style="text-align: center; position: relative; margin-top: 40px;" class="col-lg-12">
+                    <label style="font-size: 0.8vw; background-color:#5CB85C; width: 74%; color: white"><span class="glyphicon glyphicon-plus-sign"></span>选择图片</label>
+                    <input type="file" id="pic" style="height: 33px; position: absolute; top: 0px; left: 15%; opacity: 0; cursor: pointer" />
+                </div>
+            </div>
+
+            <!--添加信息-->
+            <form role="form" id="form1" class="col-lg-9">
+                <!--姓名-->
+                <div class="form-group col-md-5 input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input type="text" class="form-control" placeholder="姓名" id="nametxt" name="nametxt" />
+                </div>
+                <!--性别-->
+                <div class="form-group" style="height: 39px; line-height: 39px">
+                    <label>性别：</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" id="optionsRadiosInline1" value="男" checked="checked" style="margin-top: 13px" />男
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="sex" id="optionsRadiosInline2" value="女" style="margin-top: 13px" />女
+                    </label>
+                </div>
+                <!--时间-->
+                <div class="form-group input-group" style="width: 200px">
+                    <input type='text' class='form-control selectData' id='date' name='date' value='出生日期' />
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                </div>
+                <!--三个信息-->
+                <div class="col-lg-12">
+                    <div class="form-group col-md-3 input-group" style="float: left">
+                        <span class="input-group-addon"><i class="fa fa-arrows-v fa-fw"></i></span>
+                        <input type="text" name="height" class="form-control" placeholder="身高(cm)" id="height" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='4' />
+                    </div>
+                    <div class="form-group col-md-3 input-group" style="float: left; margin-left: 10px;">
+                        <span class="input-group-addon"><i class="fa fa-circle-o fa-fw"></i></span>
+                        <input type="text" name="weight" class="form-control" placeholder="体重(kg)" id="weight" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='4' />
+                    </div>
+                    <div class="form-group col-md-3 input-group" style="float: left; margin-left: 10px;">
+                        <span class="input-group-addon"><i class="fa fa-heart fa-fw"></i></span>
+                        <input type="text" name="BFR" class="form-control" placeholder="体脂率" id="BFR" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='4' />
+                    </div>
+                </div>
+                <!--电话号码-->
+                <div class="form-group col-md-4 input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input type="text" class="form-control" placeholder="电话号码" id="number" name="numbertxt" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='11' />
+                </div>
+                <!--身份证号码-->
+                <div class="form-group col-md-5 input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+                    <input type="text" class="form-control" placeholder="身份证号码" id="Idcard" name="Idcardtxt" maxlength='18' />
+                </div>
+                <!--会员卡类型-->
+                <div class="form-group col-lg-12" style="height: 40px; line-height: 40px;">
+                    <label style="float: left">类型：</label>
+                    <select class="form-control" style="width: 20%; float: left;" id="selected" name="selected">
+                        <option>月卡</option>
+                        <option>季卡</option>
+                        <option>年卡</option>
+                        <option>金卡</option>
+                        <option>钻石卡</option>
+                    </select>
+                </div>
+
+                <!--按钮-->
+                <div class="form-group col-lg-12">
+                    <button type="button" class="btn btn-lg" id="submitbtn">添加</button>
+                </div>
+            </form>
+            
+        </div>
+        <div class="panel-footer">
+            请输入完整信息！
+        </div>
+    </div>
+</div>
+
+<script>
+    var pics;
+    $(function () {
+        datepicker();
+        setInterval(function () {
+            var showtime = new Date();
+            var h = showtime.getHours();
+            var m = showtime.getMinutes();
+            var s = showtime.getSeconds();
+            var time = h + ":" + m + ":" + s;
+            $("#showtime").text(time);
+        }, 1000);
+
+        $(document).keydown(function (event) {
+            if (event.keyCode == 13) {
+                $("#searchbtn").click();
+            }
+        });
+        $("#searchbtn").click(function () {
+            $("#table").bootstrapTable('refresh');
+            cha();
+        })
+        cha();
+    })
+    function actionFormatter(value, row, index) {
+        var result = "";
+        result += "<a href='javascript:;' class='btn btn-xs bg-danger' title='查看' onclick='woshi(" + row.Card_id + ")' style='margin-right:3px'><span class='glyphicon glyphicon-search' ></span></a>";
+        //result += "<a href='javascript:;' class='btn btn-xs bg-primary' title='编辑' style='margin-right:3px'><span class='glyphicon glyphicon-pencil'></span></a>";
+        result += "<a href='javascript:;' class='btn btn-xs bg-warning' title='删除' style='margin-right:3px' onclick='deletelist(" + row.Card_id + ")'><span class='glyphicon glyphicon-remove'></span></a>";
+        return result;
+    }
+    function woshi(ad) {
+        //RedirectToAction("detail", "Index");
+        window.location.href = "/Index/detail?id=" + ad;
+    }
+    //删除键
+    function deletelist(list_id) {
+        zeroModal.confirm('确定删除' + '"' + list_id + '"' + '吗？', function () {
+            $.ajax({
+                type: 'POST',
+                dataType: 'text',
+                url: "/Index/Delete",
+                data: { id: list_id },
+                success: function (data) {
+                    if (data == "成功") {
+                        showToast({
+                            title: "删除成功！",
+                            icon: 'success',
+                            duration: 2000,
+                            mask: true,
+                            success: function (res) {
+                                $("#table").bootstrapTable('refresh');
+                                cha();
+                            }
+                        });
+                    }
+                }
+            })
+        });
+    }
+    
+    function cha() {
+        $('#table').bootstrapTable({
+            method: "post",
+            url: "/Index/show",
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: true,                     //是否启用排序
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+            //pageSize: rows,                     //每页的记录行数（*）
+            pageList: [10, 20],        //可供选择的每页的行数（*）
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列（选择显示的列）
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            pagination: true,
+            singleSelect: true,
+            queryParams: function (params) {
+                return {
+                    name: $("#searchtxt").val(),
+                    offset: this.pageNumber,
+                    limit: this.pageSize,
+                }
+            },
+            columns: [{
+                field: 'Card_id',
+                title: '编号',
+                align: 'center'
+            }, {
+                field: 'Card_name',
+                title: '姓名',
+                align: 'center'
+            },
+            {
+                field: 'Card_sex',
+                title: '性别',
+                align: 'center'
+            }, {
+                field: 'age',
+                title: '年龄',
+                align: 'center'
+            },
+            {
+                field: 'Cus_height',
+                title: '身高',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return row.Cus_height.substr(0,3) + "cm";
+                }
+            }, {
+                field: 'Cus_weight',
+                title: '体重',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return row.Cus_weight + "kg";
+                }
+            }, {
+                field: 'BFR',
+                title: '体脂率',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return row.BFR + "%";
+                }
+            }, {
+                field: 'Card_balance',
+                title: '余额',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return row.Card_balance + "元";
+                }
+            }, {
+                field: 'Card_integral',
+                title: '积分',
+                align: 'center'
+            }, {
+                field: 'vip_name',
+                title: '会员等级',
+                align: 'center'
+            }, {
+                field: 'days',
+                title: '剩余天数',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return row.days + "天";
+                }
+            }, {
+                field: "Card_id",
+                title: '操作',
+                width: 150,
+                align: 'center',
+                formatter: actionFormatter,
+            }]
+        });
+        $(".form_datetime").datetimepicker({
+            minView: "month", //选择日期后，不会再跳转去选择时分秒 
+            format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式 
+            language: 'cn', //汉化 
+            autoclose: true //选择日期后自动关闭 
+        });
+
+    }
+    function memberadd() {
+        var showtime = new Date();
+        var h = showtime.getFullYear();//获取年
+
+        $("#submitbtn").click(function () {
+            age = h - $("#date").val().substr(0, 4);
+            if ($("nametxt").val() != "" && $("input[type='radio']:checked").val() != "" && isNaN(age) == false && $("#height").val() != "" && $("#weight").val() != "" &&
+                $("#BFR").val() && $("#selected").val() != "") {
+                //增加会员
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    url: "/Index/Add",
+                    data: $.param({'pics':pics }) + '&' + $('#form1').serialize(),
+                    success: function (data) {
+                        if (data == "成功") {
+                            $("#table").bootstrapTable('refresh');
+                            cha();
+                        }
+                    }
+                })
+                $("#add").css("display", "none");
+                $(".mask").hide();
+                //弹框
+                showToast({
+                    title: "添加成功！",
+                    icon: 'success',
+                    duration: 2000,
+                    mask: true,
+                    success: function (res) {
+
+                    }
+                });
+
+            } else {
+                $("#doudou").shake(2, 10, 400); //抖动
+            }
+        })
+    }
+    function datepicker() {
+        $.fn.datepicker.dates['cn'] = {   //切换为中文显示  
+            days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+            daysShort: ["日", "一", "二", "三", "四", "五", "六", "七"],
+            daysMin: ["日", "一", "二", "三", "四", "五", "六", "七"],
+            months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+            today: "今天",
+            clear: "清除"
+        };
+
+        $('#date').datepicker({
+            autoclose: true, //自动关闭  
+            beforeShowDay: $.noop,    //在显示日期之前调用的函数  
+            calendarWeeks: false,     //是否显示今年是第几周  
+            clearBtn: false,          //显示清除按钮  
+            daysOfWeekDisabled: [],   //星期几不可选  
+            endDate: Infinity,        //日历结束日期  
+            forceParse: true,         //是否强制转换不符合格式的字符串  
+            format: 'yyyy-mm-dd',     //日期格式  
+            keyboardNavigation: true, //是否显示箭头导航  
+            language: 'cn',           //语言  
+            minViewMode: 0,
+            orientation: "auto",      //方向  
+            rtl: false,
+            startDate: -Infinity,     //日历开始日期  
+            startView: 0,             //开始显示  
+            todayBtn: "linked",          //今天按钮  
+            todayHighlight: true,    //今天高亮  
+            weekStart: 0              //星期几是开始  
+        });
+    }
+    $("#guanbi").click(function () {
+        $("#mask").hide();
+        $("#add").css("display", "none");
+    })
+
+    //图片选择
+    $("#pic").change(function () {
+        var str = $(this).val();
+        $("#showpic").empty();
+        if (str !== "") {
+            var arr = str.split("\\");
+            var file_name = arr[arr.length - 1];
+            pics = file_name;
+            $(this).next("button").text(file_name);
+            $("#showpic").append("<img src='/Content/images/" + file_name + "' style='width:100%;height:198px;' />");
+        }
+    })
+
+    $("#addBtn").click(function () {
+        memberadd();
+        $("#add").css("display", "block");
+        $("#mask").css("height", $(document).height());
+        $("#mask").css("width", $(document).width());
+        $("#mask").show();
+    })
+</script>
+
+
+
+
+
+

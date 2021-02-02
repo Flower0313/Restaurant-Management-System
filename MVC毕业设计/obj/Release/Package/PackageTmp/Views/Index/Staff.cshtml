@@ -1,0 +1,295 @@
+﻿@{
+    ViewBag.Title = "Staff";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/vendor/metisMenu/metisMenu.min.css" rel="stylesheet" />
+<link href="~/Content/vendor/bootstrap/css/bootstrap-table.css" rel="stylesheet" />
+<link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap-table.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/bootstrap-table-zh-CN.js"></script>
+
+<style type="text/css">
+    html {
+        overflow-y: scroll;
+    }
+
+    .mask {
+        position: absolute;
+        top: 0px;
+        filter: alpha(opacity=60);
+        background-color: #777;
+        z-index: 1002;
+        left: 0px;
+        opacity: 0.5;
+        -moz-opacity: 0.5;
+    }
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw;">员工显示</h1>
+        </div>
+    </div>
+</div>
+<!--表格显示-->
+<div class="row" id="tankuang">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            数据展示
+       
+        </div>
+        <div class="panel-body" style="position: relative;">
+            @if (Session["admin"].ToString() == "SuperAdmin")
+            { 
+                <select class="form-control" style="position: absolute; top: 57px; left: 15px; width: 15%" id="shopname">
+                    <option value="User_admin">全部</option>
+                    @foreach (System.Data.DataRow s in Model.Rows)
+                    {
+                        <option value="'@s["User_admin"]'">@s["Shop_name"]</option>
+                    }
+                </select>
+            }
+
+            <div class="input-group custom-search-form" style="width: 35%; position: relative; top: 43px; left: 20%">
+                <input type="text" class="form-control" placeholder="搜索..." id="searchtxt" />
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="searchbtn">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+            <table id="table"></table>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-info" style="width: 50%; display: none; position: absolute; left: 28%; top: 20%; z-index: 1003; background-color: white" id="chakan">
+    <div class="panel-heading">
+        <label id="staffname">员工姓名</label><a style="cursor: pointer; float: right" id="guanbi"><span class='glyphicon glyphicon-remove'></span></a>
+    </div>
+    <div class="panel-body">
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <!-- Nav tabs -->
+            <ul class="nav nav-pills">
+                <li class="active"><a href="#home-pills" data-toggle="tab">基本资料</a>
+                </li>
+                <li><a href="#profile-pills" data-toggle="tab">当前业绩</a>
+                </li>
+                <li><a href="#messages-pills" data-toggle="tab">所属店铺</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home-pills">
+                    <div class="col-lg-2" style="margin-top:2%">
+                        <img src="~/Content/images/1.jpg" style="width:100%" class="img-circle" id="touxiang"/>
+                    </div>
+                    <div class="col-lg-10">
+                        <h5 class="col-lg-6">姓名:<label id="txtname">s </label>
+                        </h5>             
+                        <h5 class="col-lg-6">姓别:<label id="txtsex">s </label>
+                        </h5>             
+                        <h5 class="col-lg-6">生日:<label id="txtbir">s </label>
+                        </h5>             
+                        <h5 class="col-lg-6">所在城市:<label id="txtcity">s </label>
+                        </h5>             
+                        <h5 class="col-lg-6">联系电话:<label id="txtnumber">s </label>
+                        </h5>             
+                        <h5 class="col-lg-6">身份证:<label id="txtidcard">s </label>
+                        </h5>             
+                        <h5 class="col-lg-6">状态:<label id="txtstate">s </label>
+                        </h5>     
+                        <h5 class="col-lg-6">地址:<label id="txtaddress">s </label>
+                        </h5>         
+                        <h5 class="col-lg-12">自我描述:<label id="txt">s </label>
+                        </h5>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade" id="profile-pills">
+                    <h4>从<label id="txtbegin"></label>开始工作到至今</h4>
+                    <h4>目前工资为:<label id="salary"></label></h4>
+                    <h4>获得的积分为:<label id="jifen"></label></h4>
+                </div>
+                <div class="tab-pane fade" id="messages-pills">
+                    <h5>服务于<label id="txtshop"></label></h5>
+                    <h5>当前的职位是<label id="txtdepartment"></label></h5>
+                </div>
+            </div>
+        </div>
+        <!-- /.panel-body -->
+        <!-- /.panel -->
+    </div>
+    <div class="panel-footer">
+    </div>
+</div>
+<div id="mask" class="mask"></div>
+<script>
+    $(function () {
+        cha();
+
+    })
+    $("#searchtxt").keydown(function (event) {
+        if (event.keyCode == 13) {
+            $("#searchbtn").click();
+        }
+    });
+    $("#searchbtn").click(function () {
+        $("#table").bootstrapTable('refresh');
+        cha();
+    })
+
+    //查询
+    function cha() {
+        $('#table').bootstrapTable({
+            method: "post",
+            url: "Staffshow",
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            sortable: true,                     //是否启用排序
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+            //pageSize: rows,                     //每页的记录行数（*）
+            pageList: [10, 20],        //可供选择的每页的行数（*）
+            search: false,                      //是否显示表格搜索
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列（选择显示的列）
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            pagination: true,
+            singleSelect: true,
+            queryParams: function (params) {
+                return {
+                    name: $("#searchtxt").val(),
+                    shopname: $("#shopname").val(),
+                    offset: this.pageNumber,
+                    limit: this.pageSize
+                }
+            },
+            columns: [{
+                field: "staff_pic",
+                title: '头像',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return "<img class='img-circle' style='height:35px' src='/Content/images/" + row.staff_pic + "' />";
+                }
+            }, {
+                field: 'staff_id',
+                title: '编号',
+                align: 'center',
+            }, {
+                field: 'staff_name',
+                title: '姓名',
+                align: 'center'
+            }, {
+                field: 'staff_bir',
+                title: '年龄',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return 2018 - row.staff_bir.substr(0, 4);
+                }
+            },
+            {
+                field: 'staff_sex',
+                title: '性别',
+                align: 'center'
+            }, {
+                field: 'staff_idcard',
+                title: '身份证',
+                align: 'center'
+            }, {
+                field: 'staff_number',
+                title: '手机号',
+                align: 'center'
+            }, {
+                field: 'department_name',
+                title: '所属部分',
+                align: 'center'
+            }, {
+                field: 'shop_name',
+                title: '所属店铺',
+                align: 'center'
+            }, {
+                field: 'staff_salary',
+                title: '工资',
+                align: 'center'
+            }, {
+                field: "staff_state",
+                title: '状态',
+                align: 'center',
+            }, {
+                field: "staff_begin",
+                title: '入职时间',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return row.staff_begin.substr(0, 10);
+                }
+            }, {
+                field: "staff_id",
+                title: '查看',
+                align: 'center',
+                formatter: function (value, row, index) {
+                    return "<a href='javascript:;' class='btn btn-xs bg-danger' title='查看' onclick='woshi(" + row.staff_id + ")' style='margin-right:3px'><span class='glyphicon glyphicon-search' ></span></a>";
+                }
+            }]
+        });
+    }
+
+    //下拉列表
+    $("#shopname").change(function () {
+        $("#table").bootstrapTable('refresh');
+        cha();
+    })
+
+    function woshi(index) {
+        $("#mask").css("height", $(document).height());
+        $("#mask").css("width", $(document).width());
+        $("#mask").show();
+        $("#chakan").css("display", "block");
+        $("#txtdepartment").siblings().empty();
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "/Food/staffdetail",
+            data: $.param({ 'id': index }),
+            success: function (data) {
+                $.each(data, function (i, item) {
+                    //基本信息
+                    $("#staffname").text(item.staff_name + "的详情信息");
+                    $("#txtname").text(item.staff_name);
+                    $("#txtsex").text(item.staff_sex);
+                    $("#txtbir").text(item.staff_bir.substr(0,10));
+                    $("#txtcity").text(item.staff_city);
+                    $("#txtnumber").text(item.staff_number);
+                    $("#txtidcard").text(item.staff_idcard);
+                    $("#txtaddress").text(item.staff_address);
+                    $("#txtstate").text(item.staff_state);
+                    $("#txt").text(item.staff_txt);
+                    $("#touxiang").attr("src", "/Content/images/" + item.staff_pic + "");
+
+                    //当前业绩
+                    $("#txtbegin").text(item.staff_begin.substr(0, 10));
+                    $("#salary").text(item.staff_salary);
+                    $("#jifen").text(item.staff_score);
+
+                    //所属店铺
+                    $("#txtshop").text(item.Shop_name);
+                    $("#txtdepartment").text(item.Department_name);
+                    $("#txtdepartment").after("<h5><a href='/Index/Shop?name=" + item.Shop_city + "'><span class='fa fa-send'></span>转到该店铺</a></h5>");
+                })
+            }
+        });
+    }
+
+    //关闭详情
+    $("#guanbi").click(function () {
+        $("#chakan").css("display", "none");
+        $("#mask").hide();
+    })
+</script>

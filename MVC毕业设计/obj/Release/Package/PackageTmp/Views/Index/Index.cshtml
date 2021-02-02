@@ -1,0 +1,306 @@
+﻿ @{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+        .mask {       
+            position: absolute; top: 0px; filter: alpha(opacity=60); background-color: #777;     
+            z-index: 1002; left: 0px;     
+            opacity:0.5; -moz-opacity:0.5;     
+        }
+        #listpanel a i {
+        margin-right:8px;
+        }
+
+    </style>
+    <script src="~/Content/js/echarts.js"></script>
+
+<div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6" id="font_box">
+                        <h1 class="page-header" style="font-size: 2.5vw;">Flower健康饮食管理系统</h1>
+                    </div>
+                    <!--天气栏显示-->
+                    <div class="col-lg-6" style="margin-top: 25px;">
+                        <iframe width="100%" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=3&num=3&site=12"></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+            <div class="row">
+                <!--本周销售额-->
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-rmb fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">@ViewBag.weekmoney</div>
+                                    <div>周销售额</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">查看详情</span>
+                                @*<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>*@
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--本周订单数-->
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-green">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-tasks fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">@ViewBag.weekcount</div>
+                                    <div>本周订单数</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">查看详情</span>
+                                @*<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>*@
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--总会员卡量-->
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-credit-card fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">@ViewBag.Member</div>
+                                    <div>总会员卡量</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">查看详情</span>
+                                @*<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>*@
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--总用户量-->
+                <div class="col-lg-3 col-md-6">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-user fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge">@ViewBag.consum</div>
+                                    <div>总用户量</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#">
+                            <div class="panel-footer">
+                                <span class="pull-left">查看详情</span>
+                                @*<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>*@
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!--图表-->
+            <div style="margin-top: 10px" class="row">
+                <div class="col-md-6" style="height: 500px" id="main"></div>
+                <div class="col-md-6" style="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bell fa-fw"></i>备忘录
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="list-group" id="listpanel">
+                                <a class="list-group-item">
+                                    <i class="fa fa-comment fa-fw">1:</i><label>1</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-twitter fa-fw">2:</i><label style="color:red">2</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-envelope fa-fw">3:</i><label>3</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-tasks fa-fw">4:</i><label style="color:red">4</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-upload fa-fw">5:</i><label>5</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-file-text fa-fw">6:</i><label style="color:red">6</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-warning fa-fw">7:</i><label>7</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-shopping-cart fa-fw">8:</i><label style="color:red">8</label>
+                                </a>
+                                <a class="list-group-item">
+                                    <i class="fa fa-money fa-fw">9:</i><label>9</label>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel .chat-panel -->
+                </div>
+            </div>
+
+    <div id="mask" class="mask">
+    </div> 
+    <div class="container" style="width: 25%;position:absolute;left:35%;top:15%;z-index:1003;display:none" id="tankuang">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                修改备忘录
+            </div>
+            <div class="panel-body">
+                <div class="input-group input-group-lg">
+                    <span class="input-group-addon"><i class="fa fa-bullhorn fa-fw"></i></span>
+                    <input type="text" class="form-control" placeholder="来吧,让我帮你记住!" id="bwtxt"/>
+                </div>
+                <!--按钮-->
+                <div class="row" style="text-align: center; margin-top: 5px;">
+                    <button type="button" class="btn btn-info btn-circle btn-lg" style="margin-right: 40px;" id="doit">
+                        <i class="fa fa-check"></i>
+                    </button>
+                    <button type="button" class="btn btn-warning btn-circle btn-lg " id="dontdoit">
+                        <i class="fa fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="panel-footer">
+                祝您天天好心情！
+            </div>
+        </div>
+    </div>
+
+<script>
+    function fetchData(cb) {
+        $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            url: "Every",
+            success: function (data) {
+                $.each(data.成交量, function (i, item) {
+                    $.each(data.注册量, function (i, item2) {
+                        // 通过 setTimeout 模拟异步加载
+                        setTimeout(function () {
+                            cb({
+                                categories: ["成交量", "注册量"],
+                                data: [[item.today, item2.today], [item.yesterday, item2.yesterday], [item.tdby, item2.tdby]]
+                            })
+                        }, 1000);
+                    });
+
+                });
+            }, error: function (error) {
+                myChart.hideLoading();
+            }
+        });
+
+    }
+    $(function () {
+            datacount();
+            //显示时间
+            var tt = undefined;//选中的列表项
+            //双击备忘录
+            $("#listpanel a").dblclick(function () {
+                forget();
+                tt = $(this).find("label");
+            });
+            //确认按钮
+            $("#doit").click(function () {
+                tt.text($("#bwtxt").val());//将文本框的值传入列表
+                $("#mask").hide();
+                $("#tankuang").css("display", "none");
+            })
+            $("#dontdoit").click(function () {//取消按钮
+                $("#mask").hide();
+                $("#tankuang").css("display", "none");
+            })
+
+            function datacount() {
+                var myChart = echarts.init($("#main").get(0));//将Jquery转换为DOM
+                // 初始 option
+                option = {
+                    title: {
+                        text: '每日统计'
+                    },
+                    legend: {},
+                    tooltip: {},
+                    dataset: {
+                        source: [
+                            ['成交量'],
+                            ['注册量'],
+                        ]
+                    },
+                    xAxis: { type: 'category' },
+                    yAxis: {},
+                    series: [
+                        { type: 'bar' },
+                        { type: 'bar' },
+                        { type: 'bar' }
+                    ]
+                };
+                myChart.showLoading();
+
+                fetchData(function (data) {
+                    myChart.hideLoading();
+
+                    myChart.setOption({
+                        xAxis: {
+                            data: data.categories,
+                        },
+                        series: [{
+                            // 根据名字对应到相应的系列
+                            name: '前日',
+                            data: data.data[0]
+                        }, {
+                            name: '昨日',
+                            data: data.data[1]
+                        }, {
+                            name: '今日',
+                            data: data.data[2]
+                        }]
+                    });
+                });
+                myChart.setOption(option);
+                window.onresize = myChart.resize;//左边是窗口大小发生改变就会执行一次函数,
+            }
+
+
+            
+        })
+
+        function forget() {
+            $("#mask").css("height", $(document).height());
+            $("#mask").css("width", $(document).width());
+            $("#mask").show();
+            $("#bwtxt").val("");
+            $("#tankuang").css("display", "block");
+        }
+
+        
+
+    </script>

@@ -1,0 +1,259 @@
+﻿@{
+    ViewBag.Title = "detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/zeroModal.css" rel="stylesheet" />
+<script src="~/Content/js/alert.js"></script>
+<script src="~/Content/js/zeroModal.min.js"></script>
+<script src="~/Content/vendor/bootstrap/js/datepicker.js"></script>
+
+
+<style type="text/css">
+    #detail input {
+        border: 1px solid transparent;
+    }
+    #back:hover {
+        color:white;
+        background-color:red;
+        }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header" style="font-size: 1.5vw;">会员详情</h1>
+        </div>
+    </div>
+</div>
+
+<div style="width:90%" class="row">
+    <!--//返回按钮-->
+        <div id="back" style="border:1px solid red;width:6%;height:30px;border-bottom-left-radius:50px;border-top-left-radius:50px;margin:10px 0px;cursor:pointer;text-align:center;line-height:30px;">
+                   返回
+                </div>
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                会员详细资料
+            </div>
+            <!-- .panel-heading -->
+            <div class="panel-body">
+                <div class="col-sm-2">
+                    <img src="/Content/images/null.jpg" style="width: 100%; height: 150px" id="touxiang"/>
+                </div>
+                <div class="col-sm-10" id="detail">
+                    <form role="form" id="form">
+                        <h5 class="col-sm-4">编号：<span id="txtid"></span></h5>
+                        <h5 class="col-sm-4">姓名：<input type="text" value="肖华" name="txtname" readonly="true" style="width: 185px" id="txtname" /></h5>
+                        <h5 class="col-sm-4">性别：<input type="text" value="男" name="txtsex" readonly="true" style="width: 200px"  id="txtsex"/></h5>
+                        <h5 class="col-sm-4">身份证：<input type="text" value="430903199803131001X" name="txtIdcard" readonly="true" style="width: 185px" id="txtIdcard" maxlength='18'/></h5>
+                        <h5 class="col-sm-4">电话号码：<input type="text" value="" name="txtnumber" readonly="true" style="width: 160px" id="txtnumber" maxlength='11'/></h5>
+                        <h5 class="col-sm-4">生日：<input type="text" value="" name="txtbir" readonly="true" style="width: 165px" id="txtbir"/></h5>
+                        <h5 class="col-sm-4">身高：<input type="text" value="" name="txtheight" readonly="true" style="width: 185px" id="txtheight" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='4' /></h5>
+                        <h5 class="col-sm-4">体重：<input type="text" value="" name="weight" readonly="true" style="width: 185px" id="weight" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='4'/></h5>
+                        <h5 class="col-sm-4">体脂率：<input type="text" value="" name="BFR" readonly="true" style="width: 185px" id="BFR" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')" maxlength='4'/></h5>
+                        <h5 class="col-sm-4">年龄：<span id="txtage"></span></h5>
+                        <h5 class="col-sm-4">卡余额：<input type="text" value="" name="txtbalance" readonly="true" style="width: 185px" id="txtbalance" /></h5>
+                        <h5 class="col-sm-4">积分：<span id="txtintegral">0</span></h5>
+                        <h5 class="col-sm-6" style="position: relative">开始时间：<input type='text' class='selectData' id='date' name='date' value='' style="width: 185px;" readonly="true" />
+                            <span id="dang" style="display: none; width: 190px; height: 28px; position: absolute; right: 150px; top: 0px"></span>
+                        </h5>
+                        <h5 class="col-sm-6" style="height: 28px;">到期时间：<span id="endtime">2018-05-25</span></h5>
+                        <h5 class="col-sm-6">营养师：
+                            <!--<input type="text" value="" name="txtperson" readonly="true" style="width: 185px" id="txtperson" />-->
+                            <select disabled="disabled" name="txtperson" id="txtperson">
+                        </select>
+                        </h5>
+                        <h5 class="col-sm-6">办卡地点：<input type="text" value="" name="txtpoint" readonly="true" style="width: 170px" id="txtpoint"/></h5>
+                        <h5 class="col-sm-6">会员卡状态：<select disabled="disabled" name="state" id="state">
+                            <option value="正常">正常</option>
+                            <option value="冻结">冻结</option>
+                        </select></h5>
+                        <h5 class="col-sm-6">持卡类型：<select disabled="disabled" name="type" id="type">
+                            <option value="钻石卡">钻石卡</option>
+                            <option value="金卡">金卡</option>
+                            <option value="年卡">年卡</option>
+                            <option value="季卡">季卡</option>
+                            <option value="月卡">月卡</option>
+                        </select></h5>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-danger pull-right" id="bianji">编辑会员</button>
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-danger pull-left" id="delete">删除会员</button>
+                </div>
+                <!-- .panel-body -->
+            </div>
+        </div>
+    </div>
+
+
+<script>
+        $(function () {
+            person();
+            Show();
+        })
+        //编辑按钮
+        $("#bianji").click(function () {
+            if ($(this).text() == "保存编辑") {
+                zeroModal.confirm('确认保存吗？', function () {
+                    $.ajax({//必须先ajax先行，不然后面代码会屏蔽传值
+                        type: 'POST',
+                        dataType: 'text',
+                        url: "Update",
+                        data: $.param({ 'id': $("#txtid").text() }) + '&' + $('form').serialize(),
+                        success: function (data) {
+                            if (data == "成功") {
+                                showToast({
+                                    title: "保存成功！",
+                                    icon: 'success',
+                                    duration: 1200,
+                                    mask: true,
+                                    success: function (res) {
+                                        window.location.href = "Employee";
+                                    }
+                                })
+                            }
+                            else {
+                                showToast({
+                                    title: "保存失败！",
+                                    icon: 'success',
+                                    duration: 1200,
+                                    mask: true,
+                                    success: function (res) {
+                                        window.location.href = "Employee";
+                                    }
+                                })
+                            }
+                        }
+                    })
+                    $("#dang").css("display", "block");
+                    $("#bianji").text("编辑会员");
+                    $("#delete").attr('disabled', false);
+                    $("#detail").find("select").attr("disabled", true);
+                    $("#detail").find("input").css("border", "2px solid transparent").attr("readonly", "readonly");
+                    
+                });
+            }
+            $(this).text("保存编辑");
+            datepicker();
+            $("#dang").css("display", "none");
+            $("#delete").attr('disabled', true);
+            $("#detail").find("select").attr("disabled", false);
+            $("#detail").find("input").css("border", "2px solid red").removeAttr("readonly");
+        })
+        //删除按钮
+        $("#delete").click(function () {
+            var id = $("#txtid").text();//获取编号
+            zeroModal.confirm('确定删除' + '"' + id + '"' + '吗？', function () {
+                $.ajax({
+                    type: 'POST',
+                    dataType: 'text',
+                    url: "Delete",
+                    data: { id: id },
+                    success: function (data) {
+                        if (data == "成功") {
+                            showToast({
+                                title: "删除成功！",
+                                icon: 'success',
+                                duration: 1000,
+                                mask: true,
+                                success: function (res) {
+                                    window.location.href = "Employee";
+                                }
+                            })
+                        }
+                    }
+                })
+                return false;
+            })
+        })
+        //日期选择控件
+        function datepicker() {
+            $.fn.datepicker.dates['cn'] = {   //切换为中文显示  
+                days: ["周日", "周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+                daysShort: ["日", "一", "二", "三", "四", "五", "六", "七"],
+                daysMin: ["日", "一", "二", "三", "四", "五", "六", "七"],
+                months: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                monthsShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+                today: "今天",
+                clear: "清除"
+            };
+
+            $('.selectData').datepicker({
+                autoclose: true, //自动关闭  
+                beforeShowDay: $.noop,    //在显示日期之前调用的函数  
+                calendarWeeks: false,     //是否显示今年是第几周  
+                clearBtn: false,          //显示清除按钮  
+                daysOfWeekDisabled: [],   //星期几不可选  
+                endDate: Infinity,        //日历结束日期  
+                forceParse: true,         //是否强制转换不符合格式的字符串  
+                format: 'yyyy-mm-dd',     //日期格式  
+                keyboardNavigation: true, //是否显示箭头导航  
+                language: 'cn',           //语言  
+                minViewMode: 0,
+                orientation: "auto",      //方向  
+                rtl: false,
+                startDate: -Infinity,     //日历开始日期  
+                startView: 0,             //开始显示  
+                todayBtn: "linked",       //今天按钮  
+                todayHighlight: true,     //今天高亮  
+                weekStart: 0              //星期几是开始  
+            });
+        }
+
+        //从前台显示数据
+        function Show() {
+            var idd = document.location.search.substr(4).toString();//获取前台传来的编号值
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: "detailshow",//如果是页面传过来的值会导致地址重复两次，所有只要action地址就ok了
+                data: { id: idd },
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#txtid").text(item.Card_id);
+                        $("#txtname").val(item.Card_name);
+                        $("#txtsex").val(item.Card_sex);
+                        $("#txtIdcard").val(item.Id_card);
+                        $("#txtnumber").val(item.Card_number);
+                        $("#txtbir").val(item.bir);
+                        $("#txtheight").val(item.Cus_height);
+                        $("#weight").val(item.Cus_weight);
+                        $("#BFR").val(item.BFR);
+                        $("#txtbalance").val(item.Card_balance);
+                        $("#txtintegral").val(item.Card_integral);
+                        $("#txtperson").val(item.staff_name);
+                        $("#txtpoint").val(item.Shop_name);
+                        $("#txtage").text(item.age);
+                        $("#date").val(item.begintime);
+                        $("#endtime").text(item.endtime);
+                        $("#state").val(item.Card_state.replace(/(^\s*)|(\s*$)/g, ""));//去除多余的空格
+                        $("#type").val(item.vip_name);
+                        $("#touxiang").attr("src", "/Content/images/"+item.Card_pic);
+                    });
+                }
+
+            })
+        }
+
+        //绑定营养师下拉列表
+        function person() {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "Person",
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#txtperson").append("<option value='" + item.staff_name + "'>" + item.staff_name + "</option>");
+                    });
+                }
+            })
+        }
+        $("#back").click(function () {
+            window.location.href = "Employee";
+        })
+    </script>
+
+

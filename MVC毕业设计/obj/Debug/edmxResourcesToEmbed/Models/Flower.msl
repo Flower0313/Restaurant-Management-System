@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="FlowerNutritionModelStoreContainer" CdmEntityContainer="FlowerNutritionEntities">
+    <EntitySetMapping Name="Consume">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Consume">
+        <MappingFragment StoreEntitySet="Consume">
+          <ScalarProperty Name="Cus_id" ColumnName="Cus_id" />
+          <ScalarProperty Name="Cus_detail" ColumnName="Cus_detail" />
+          <ScalarProperty Name="Cus_money" ColumnName="Cus_money" />
+          <ScalarProperty Name="Ifvip" ColumnName="Ifvip" />
+          <ScalarProperty Name="Cus_want" ColumnName="Cus_want" />
+          <ScalarProperty Name="Cus_time" ColumnName="Cus_time" />
+          <ScalarProperty Name="Cus_way" ColumnName="Cus_way" />
+          <ScalarProperty Name="Card_id" ColumnName="Card_id" />
+          <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Department">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="Department_id" ColumnName="Department_id" />
+          <ScalarProperty Name="Department_name" ColumnName="Department_name" />
+          <ScalarProperty Name="Department_txt" ColumnName="Department_txt" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Food">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Food">
+        <MappingFragment StoreEntitySet="Food">
+          <ScalarProperty Name="Food_id" ColumnName="Food_id" />
+          <ScalarProperty Name="Food_name" ColumnName="Food_name" />
+          <ScalarProperty Name="Food_sale" ColumnName="Food_sale" />
+          <ScalarProperty Name="Food_ka" ColumnName="Food_ka" />
+          <ScalarProperty Name="Food_area" ColumnName="Food_area" />
+          <ScalarProperty Name="Food_txt" ColumnName="Food_txt" />
+          <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+          <ScalarProperty Name="FoodType_id" ColumnName="FoodType_id" />
+          <ScalarProperty Name="Food_pic" ColumnName="Food_pic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FoodType">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.FoodType">
+        <MappingFragment StoreEntitySet="FoodType">
+          <ScalarProperty Name="FoodType_id" ColumnName="FoodType_id" />
+          <ScalarProperty Name="FoodType_name" ColumnName="FoodType_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Forget">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Forget">
+        <MappingFragment StoreEntitySet="Forget">
+          <ScalarProperty Name="Forget_id" ColumnName="Forget_id" />
+          <ScalarProperty Name="Forget_txt" ColumnName="Forget_txt" />
+          <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Meal">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Meal">
+        <MappingFragment StoreEntitySet="Meal">
+          <ScalarProperty Name="meal_id" ColumnName="meal_id" />
+          <ScalarProperty Name="meal_name" ColumnName="meal_name" />
+          <ScalarProperty Name="meal_price" ColumnName="meal_price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MealFood">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.MealFood">
+        <MappingFragment StoreEntitySet="MealFood">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="food_id" ColumnName="food_id" />
+          <ScalarProperty Name="meal_id" ColumnName="meal_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Member">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Member">
+        <MappingFragment StoreEntitySet="Member">
+          <ScalarProperty Name="Card_id" ColumnName="Card_id" />
+          <ScalarProperty Name="Card_name" ColumnName="Card_name" />
+          <ScalarProperty Name="Card_bir" ColumnName="Card_bir" />
+          <ScalarProperty Name="Cus_height" ColumnName="Cus_height" />
+          <ScalarProperty Name="Cus_weight" ColumnName="Cus_weight" />
+          <ScalarProperty Name="BFR" ColumnName="BFR" />
+          <ScalarProperty Name="Card_balance" ColumnName="Card_balance" />
+          <ScalarProperty Name="Card_integral" ColumnName="Card_integral" />
+          <ScalarProperty Name="Card_pic" ColumnName="Card_pic" />
+          <ScalarProperty Name="vip_id" ColumnName="vip_id" />
+          <ScalarProperty Name="Card_begin" ColumnName="Card_begin" />
+          <ScalarProperty Name="Card_end" ColumnName="Card_end" />
+          <ScalarProperty Name="Card_sex" ColumnName="Card_sex" />
+          <ScalarProperty Name="Id_card" ColumnName="Id_card" />
+          <ScalarProperty Name="Card_number" ColumnName="Card_number" />
+          <ScalarProperty Name="Card_state" ColumnName="Card_state" />
+          <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+          <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Record">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Record">
+        <MappingFragment StoreEntitySet="Record">
+          <ScalarProperty Name="Record_id" ColumnName="Record_id" />
+          <ScalarProperty Name="Cus_id" ColumnName="Cus_id" />
+          <ScalarProperty Name="Card_id" ColumnName="Card_id" />
+          <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+          <ScalarProperty Name="food_id" ColumnName="food_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Shop">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Shop">
+        <MappingFragment StoreEntitySet="Shop">
+          <ScalarProperty Name="Shop_id" ColumnName="Shop_id" />
+          <ScalarProperty Name="Shop_name" ColumnName="Shop_name" />
+          <ScalarProperty Name="Shop_begin" ColumnName="Shop_begin" />
+          <ScalarProperty Name="Shop_address" ColumnName="Shop_address" />
+          <ScalarProperty Name="Shop_city" ColumnName="Shop_city" />
+          <ScalarProperty Name="Shop_province" ColumnName="Shop_province" />
+          <ScalarProperty Name="Shop_person" ColumnName="Shop_person" />
+          <ScalarProperty Name="Shop_money" ColumnName="Shop_money" />
+          <ScalarProperty Name="Shop_number" ColumnName="Shop_number" />
+          <ScalarProperty Name="Shop_pay" ColumnName="Shop_pay" />
+          <ScalarProperty Name="Shop_state" ColumnName="Shop_state" />
+          <ScalarProperty Name="Shop_end" ColumnName="Shop_end" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Staff">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Staff">
+        <MappingFragment StoreEntitySet="Staff">
+          <ScalarProperty Name="staff_id" ColumnName="staff_id" />
+          <ScalarProperty Name="staff_name" ColumnName="staff_name" />
+          <ScalarProperty Name="staff_bir" ColumnName="staff_bir" />
+          <ScalarProperty Name="staff_sex" ColumnName="staff_sex" />
+          <ScalarProperty Name="staff_city" ColumnName="staff_city" />
+          <ScalarProperty Name="staff_address" ColumnName="staff_address" />
+          <ScalarProperty Name="staff_idcard" ColumnName="staff_idcard" />
+          <ScalarProperty Name="staff_number" ColumnName="staff_number" />
+          <ScalarProperty Name="Department_id" ColumnName="Department_id" />
+          <ScalarProperty Name="shop_id" ColumnName="shop_id" />
+          <ScalarProperty Name="staff_score" ColumnName="staff_score" />
+          <ScalarProperty Name="staff_salary" ColumnName="staff_salary" />
+          <ScalarProperty Name="staff_begin" ColumnName="staff_begin" />
+          <ScalarProperty Name="staff_state" ColumnName="staff_state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="User_id" ColumnName="User_id" />
+          <ScalarProperty Name="User_admin" ColumnName="User_admin" />
+          <ScalarProperty Name="User_pwd" ColumnName="User_pwd" />
+          <ScalarProperty Name="Shop_id" ColumnName="Shop_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vip">
+      <EntityTypeMapping TypeName="FlowerNutritionModel.Vip">
+        <MappingFragment StoreEntitySet="Vip">
+          <ScalarProperty Name="vip_id" ColumnName="vip_id" />
+          <ScalarProperty Name="vip_name" ColumnName="vip_name" />
+          <ScalarProperty Name="vip_discount" ColumnName="vip_discount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

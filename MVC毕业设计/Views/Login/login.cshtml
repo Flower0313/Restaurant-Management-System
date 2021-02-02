@@ -1,0 +1,107 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>login</title>
+    <link href="~/Content/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/dist/css/sb-admin-2.css" rel="stylesheet" />
+    <script src="~/Content/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        html {
+        overflow-y: scroll;
+    }
+    </style>
+</head>
+
+
+<body>
+    <div style="position: fixed; width: 100%; height: 100%;">
+        <img src="/Content/images/flower_BGM.jpg" style="position: fixed; width: 100%; height: 100%" />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="login-panel panel panel-default" style="box-shadow: 0 0 10px black;">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">欢迎使用Flower健康管理系统</h3>
+                        </div>
+                        <div class="panel-body">
+                            <form role="form" id="form2">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="账号" id="txt" name="admin" type="email" title="提示"
+                                            data-container="body" data-toggle="popover" data-placement="right"
+                                            data-content="请输入您的专属管理号"
+                                            autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" placeholder="密码" id="pwdtxt" name="password" type="password">
+                                    </div>
+                                    <div class="checkbox">
+                                        <select class="form-control" id="men" name="menmian">
+                                            <option id="all">请选择店面</option>
+                                            @foreach (System.Data.DataRow s in Model.Rows)
+                                            {
+                                                <option>@s["Shop_name"]</option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <a class="btn btn-lg btn-success btn-block" id="denglu">登录</a>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info" role="alert" id="tishi" style="position: absolute; top: 100px; right: 0px; width: 200px">请输入完整信息</div>
+    </div>
+    <script>
+        $(function () {
+            $("#tishi").hide();
+            $("#txt").focus(function () {
+                $("[data-toggle='popover']").popover('show');
+            });
+            $("#txt").blur(function () {
+                $("[data-toggle='popover']").popover('hide');
+            });
+            $(document).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    $("#denglu").click();
+                }
+            });
+
+            $("#denglu").click(function () {
+                if (($("#txt").val() != "" && $("#pwdtxt").val() != "" && $("#men").val() != "请选择店面") || ($("#txt").val() == "SuperAdmin" && $("#pwdtxt").val() != "")) {
+                    $.ajax({
+                        type: 'POST',
+                        dataType: 'text',
+                        url: "/Login/denglu",
+                        data: $('#form2').serialize(),
+                        success: function (data) {
+                            if (data == "OK") {
+                                window.location.href = "/Index/Index";
+                                return;
+                            } else {
+                                alert("账号或密码错误!")
+                            }
+                            $("#pwdtxt").val("");
+                            $("#men").val("请选择店面");
+                        }
+                    })
+                } else {
+                    $("#tishi").stop(true, true).slideDown(600);
+                    setTimeout(function () {
+                        $("#tishi").stop(true, true).fadeOut(600);
+                    }, 1200)
+                }
+            })
+        })
+    </script>
+</body>
+</html>
